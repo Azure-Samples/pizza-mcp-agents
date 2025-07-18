@@ -1,11 +1,4 @@
-# Open Hack for Build 2025
-
-This repository contains the code and documentation of the Open Hack for Build 2025. The goal of this hack is to help you learn how to build and use AI Agents using Azure services and tools.
-
-- Getting ready (before the event): [aka.ms/BuildOpenHackResources](https://aka.ms/BuildOpenHackResources)
-- Challenges: [aka.ms/OpenHackAtBuild](https://aka.ms/OpenHackAtBuild)
-- Registration: [aka.ms/OpenHackRegister](https://aka.ms/OpenHackRegister)
-- Live Orders Dashboard: [aka.ms/OpenHackLiveOrders](https://aka.ms/OpenHackLiveOrders) 
+# Pizza API and MCP server for building AI Agents
 
 ## Getting started
 
@@ -18,7 +11,7 @@ The quickest way is to use [GitHub Codespaces](#use-github-codespaces) that prov
 
 You can run this project directly in your browser by using GitHub Codespaces, which will open a web-based VS Code:
 
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=flat-square&label=GitHub+Codespaces&message=Open&color=blue&logo=github)](https://codespaces.new/Microsoft/open-hack-build-25?hide_repo_select=true&ref&quickstart=true)
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=flat-square&label=GitHub+Codespaces&message=Open&color=blue&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref&quickstart=true)
 
 </details>
 
@@ -29,7 +22,7 @@ A similar option to Codespaces is VS Code Dev Containers, that will open the pro
 
 You will also need to have [Docker](https://www.docker.com/get-started/) installed on your machine to run the container.
 
-[![Open in Dev Containers](https://img.shields.io/static/v1?style=flat-square&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Microsoft/open-hack-build-25)
+[![Open in Dev Containers](https://img.shields.io/static/v1?style=flat-square&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/pizza-mcp-agents)
 
 </details>
 
@@ -49,7 +42,7 @@ You need to install following tools to work on your local machine:
 
 Then you can get the project code:
 
-1. [**Fork**](https://github.com/Microsoft/open-hack-build-25/fork) the project to create your own copy of this repository.
+1. [**Fork**](https://github.com/Azure-Samples/pizza-mcp-agents/fork) the project to create your own copy of this repository.
 2. On your forked repository, select the **Code** button, then the **Local** tab, and copy the URL of your forked repository.
 
    ![Screenshot showing how to copy the repository URL](./docs/images/clone-url.png)
@@ -67,20 +60,6 @@ azd up
 ```
 
 You can check the `README.md` file in each directory for more specific instructions.
-
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Trademarks
 
