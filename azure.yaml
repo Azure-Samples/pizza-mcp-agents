@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+name: pizza-openhack-build25
+metadata:
+  template: pizza-openhack-build25
+
+services:
+  pizza-api:
+    project: ./src/pizza-api
+    language: ts
+    host: function
+
+  pizza-website:
+    project: ./src/pizza-website
+    dist: dist
+    language: ts
+    host: staticwebapp
+    # Needed to get the PIZZA_API_URL env var set
+    hooks:
+      predeploy:
+        windows:
+          shell: pwsh
+          run: npm run build
+        posix:
+          shell: sh
+          run: npm run build
+
+  registration-api:
+    project: ./src/registration-api
+    language: ts
+    host: function
+
+  registration-website:
+    project: ./src/registration-website
+    dist: dist
+    language: ts
+    host: staticwebapp
+
+  pizza-mcp:
+    project: ./src/pizza-mcp
+    language: ts
+    host: containerapp
+
+hooks:
+  postprovision:
+    windows:
+      shell: pwsh
+      run: |
+        azd env get-values > .env
+        cd src/pizza-api && npm run update:local-settings &&
+        cd ../registration-api && npm run update:local-settings
+    posix:
+      shell: sh
+      run: |
+        azd env get-values > .env
+        cd src/pizza-api && npm run update:local-settings &&
+        cd ../registration-api && npm run update:local-settings

@@ -1,0 +1,24 @@
+{
+  "name": "registration-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "swa start",
+    "serve": "concurrently npm:serve:* --raw --kill-others",
+    "serve:api": "cd ../registration-api && npm start",
+    "serve:webapp": "npm run dev -s",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^3.3.0"
+  },
+  "devDependencies": {
+    "@azure/static-web-apps-cli": "^2.0.6",
+    "concurrently": "^9.1.2",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
+}
