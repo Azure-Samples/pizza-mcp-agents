@@ -13,6 +13,11 @@ script({
       description: "Context for the banner",
       required: true,
     },
+    text: {
+      type: "string",
+      description: "Text to include in the banner",
+      required: true
+    },
     count: {
       type: "integer",
       description: "Number of banner variations to generate",
@@ -69,6 +74,8 @@ def("QUERY", env.vars.question);
 
 $`## Instructions
 Create a prompt for gpt-image-1 to generate a professional social media banner suitable for OpenGraph, Twitter, and other social sharing platforms. Context and inspiration: <QUERY>.
+Do not use the context words directly as text in the banner, but rather as inspiration for the design.
+${env.vars.text ? `Include the text: "${env.vars.text}" in the banner.` : ""}
 Target aspect ratio is 2:1 ratio - design for this ratio and make it fit the actual size of 1536x1024 pixels, using black bars.
 Characteristics of the banner: Modern, professional, visually appealing for social media, bright colors, clean design, readable text elements if any, suitable for software project promotion.
 The banner should work well as a social media preview image and represent the project effectively.
