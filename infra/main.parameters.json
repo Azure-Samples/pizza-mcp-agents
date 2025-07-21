@@ -29,15 +29,6 @@
     "chatModelCapacity": {
       "value": "${AZURE_OPENAI_CHAT_MODEL_CAPACITY=10}"
     },
-    "embeddingsModelName": {
-      "value": "${AZURE_OPENAI_EMBEDDINGS_MODEL=text-embedding-ada-002}"
-    },
-    "embeddingsModelVersion": {
-      "value": "${AZURE_OPENAI_EMBEDDINGS_MODEL_VERSION=2}"
-    },
-    "embeddingsModelCapacity": {
-      "value": "${AZURE_OPENAI_EMBEDDINGS_MODEL_CAPACITY=20}"
-    },
     "isContinuousIntegration": {
       "value": "${CI=false}"
     },

@@ -57,9 +57,6 @@ param openAiApiVersion string // Set in main.parameters.json
 param chatModelName string // Set in main.parameters.json
 param chatModelVersion string // Set in main.parameters.json
 param chatModelCapacity int // Set in main.parameters.json
-param embeddingsModelName string // Set in main.parameters.json
-param embeddingsModelVersion string // Set in main.parameters.json
-param embeddingsModelCapacity int // Set in main.parameters.json
 
 // Location is not relevant here as it's only for the built-in api
 // which is not used here. Static Web App is a global service otherwise
@@ -184,10 +181,9 @@ module pizzaApiFunctionSettings './core/site-app-settings.bicep' = {
       },
       useOpenAi
         ? {
-            AZURE_OPENAI_ENDPOINT: openAiUrl
-            AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: chatModelName
-            AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME: embeddingsModelName
-            AZURE_OPENAI_INSTANCE_NAME: openAi.outputs.name
+            AZURE_OPENAI_API_ENDPOINT: openAiUrl
+            AZURE_OPENAI_API_CHAT_DEPLOYMENT_NAME: chatModelName
+            AZURE_OPENAI_API_INSTANCE_NAME: openAi.outputs.name
             AZURE_OPENAI_API_VERSION: openAiApiVersion
           }
         : {}
@@ -387,18 +383,6 @@ module openAi 'br/public:avm/res/cognitive-services/account:0.10.2' = if (useOpe
         sku: {
           capacity: chatModelCapacity
           name: 'GlobalStandard'
-        }
-      }
-      {
-        name: embeddingsModelName
-        model: {
-          format: 'OpenAI'
-          name: embeddingsModelName
-          version: embeddingsModelVersion
-        }
-        sku: {
-          capacity: embeddingsModelCapacity
-          name: 'Standard'
         }
       }
     ]
@@ -602,8 +586,7 @@ output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environme
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerApps.outputs.registryLoginServer
 output AZURE_CONTAINER_REGISTRY_NAME string = containerApps.outputs.registryName
 
-output AZURE_OPENAI_ENDPOINT string = openAiUrl
-output AZURE_OPENAI_CHAT_DEPLOYMENT_NAME string = chatModelName
-output AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME string = embeddingsModelName
-output AZURE_OPENAI_INSTANCE_NAME string = useOpenAi ? openAi.outputs.name : ''
+output AZURE_OPENAI_API_ENDPOINT string = openAiUrl
+output AZURE_OPENAI_API_CHAT_DEPLOYMENT_NAME string = chatModelName
+output AZURE_OPENAI_API_INSTANCE_NAME string = useOpenAi ? openAi.outputs.name : ''
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
