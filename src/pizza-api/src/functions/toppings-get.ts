@@ -1,6 +1,16 @@
 import { app, type HttpRequest, type InvocationContext } from '@azure/functions';
 import { DbService } from '../db-service';
-import { ToppingCategory } from '../topping';
+import { ToppingCategory, type Topping } from '../topping';
+
+function transformToppingImageUrl(topping: Topping, request: HttpRequest): Topping {
+  const url = new URL(request.url);
+  const baseUrl = `${url.protocol}//${url.host}`;
+
+  return {
+    ...topping,
+    imageUrl: `${baseUrl}/api/images/${topping.imageUrl}`,
+  };
+}
 
 app.http('toppings-get', {
   methods: ['GET'],
@@ -16,16 +26,18 @@ app.http('toppings-get', {
     // If a category is specified, filter toppings by category
     if (categoryParam && Object.values(ToppingCategory).includes(categoryParam as ToppingCategory)) {
       const toppings = await dataService.getToppingsByCategory(categoryParam as ToppingCategory);
+      const transformedToppings = toppings.map(topping => transformToppingImageUrl(topping, request));
       return {
-        jsonBody: toppings,
+        jsonBody: transformedToppings,
         status: 200
       };
     }
     
     // Otherwise return all toppings
     const toppings = await dataService.getToppings();
+    const transformedToppings = toppings.map(topping => transformToppingImageUrl(topping, request));
     return {
-      jsonBody: toppings,
+      jsonBody: transformedToppings,
       status: 200
     };
   }
@@ -47,8 +59,10 @@ app.http('topping-get-by-id', {
       };
     }
 
+    const transformedTopping = transformToppingImageUrl(topping, request);
+
     return {
-      jsonBody: topping,
+      jsonBody: transformedTopping,
       status: 200
     };
   }
