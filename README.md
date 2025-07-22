@@ -12,59 +12,36 @@
 
 ⭐ If you like this sample, star it on GitHub — it helps a lot!
 
-[Overview](#overview) • [Architecture](#architecture) • [Getting started](#getting-started) • [Local development](#local-development) • [Deploy to Azure](#deploy-to-azure)
+[Overview](#overview) • [Getting started](#getting-started) • [Local development](#local-development) • [Deploy to Azure](#deploy-to-azure) • [Resources](#resources) • [Troubleshooting](#troubleshooting)
 
 </div>
-
-## Overview
 
 This project demonstrates how to build AI agents that can interact with real-world APIs using the **Model Context Protocol (MCP)**. It features a complete pizza ordering system with a serverless API, web interfaces, and an MCP server that enables AI agents to browse menus, place orders, and track order status.
 
 The system consists of multiple interconnected services:
-- **Pizza API**: Serverless Azure Functions API for pizza ordering
-- **Pizza MCP Server**: Model Context Protocol server enabling AI agent interactions
-- **Pizza Website**: Live order dashboard built with Azure Static Web Apps
-- **Registration System**: User authentication and management for the pizza ordering system
+- **Pizza API**: Serverless API for pizza ordering
+- **Pizza MCP server**: MCP server enabling AI agent interactions
+- **Pizza web app**: Live order dashboard, showing real-time pizza orders status
+- **Registration system**: User registration for accessing the pizza ordering system
 
 > [!TIP]
 > You can test this application locally without deployment needed or any cloud costs. The MCP server works with popular AI tools like GitHub Copilot, Claude, and other MCP-compatible clients.
 
-## Architecture
+## Overview
 
-The application follows a microservices architecture deployed on Azure:
+This sample uses a microservices architecture deployed on Azure:
 
-```mermaid
-graph TB
-    A[AI Agent/Client] -->|MCP Protocol| B[Pizza MCP Server]
-    B -->|HTTP| C[Pizza API]
-    C --> D[Azure Cosmos DB]
-    C --> E[Azure Blob Storage]
-    F[Pizza Website] -->|HTTP| C
-    G[Registration Website] --> H[Registration API]
-    H --> I[User Database]
-    
-    subgraph "Azure Container Apps"
-        B
-    end
-    
-    subgraph "Azure Functions"
-        C
-        H
-    end
-    
-    subgraph "Azure Static Web Apps"
-        F
-        G
-    end
-```
+<div align="center">
+  <img src="./docs/images/architecture.drawio.png" alt="Application architecture" />
+</div>
 
 ### Core Components
 
-- **Pizza MCP Server** (Azure Container Apps): Exposes the pizza API through Model Context Protocol, enabling AI agents to interact with the pizza ordering system
 - **Pizza API** (Azure Functions): RESTful API handling pizza menu, orders, and business logic
-- **Pizza Website** (Azure Static Web Apps): Real-time dashboard for monitoring orders and system status
-- **Registration System** (Azure Functions + Static Web Apps): User authentication and profile management
-- **Storage Layer** (Azure Cosmos DB + Blob Storage): Data persistence for orders, user profiles, and static assets
+- **Pizza MCP server** (Azure Container Apps): Exposes the pizza API through MCP, enabling AI agents to interact with the pizza ordering system
+- **Pizza web app** (Azure Static Web Apps): Real-time dashboard for monitoring orders and system status
+- **Registration API** (Azure Functions): User registration for accessing the pizza ordering system
+- **Registration web app** (Azure Static Web Apps): Web interface for user registration
 
 ### MCP Tools Available
 
@@ -149,7 +126,13 @@ This will start:
 - **Pizza API**: http://localhost:7071
 - **Pizza MCP Server**: http://localhost:3000
 
+> [!NOTE]
+> When running locally without having deployed the application, the servers will use in-memory storage, so any data will be lost when you stop the servers.
+> After a successful deployment, the servers will use Azure Cosmos DB for persistent storage.
+
 ### Testing the MCP Server
+
+#### Using the MCP Inspector
 
 You can test the MCP server using the MCP Inspector:
 
@@ -162,13 +145,13 @@ You can test the MCP server using the MCP Inspector:
 
 3. Configure the connection:
    - **Transport**: SSE or Streamable HTTP
-   - **URL**: `http://localhost:3000/sse` (for SSE) or `http://localhost:3000/mcp` (for Streamable HTTP)
+   - **URL**: `http://localhost:3000/mcp` (for Streamable HTTP) or `http://localhost:3000/sse` (for legacy SSE)
 
 4. Click **Connect** and explore the available tools
 
-### Using with GitHub Copilot
+#### Using GitHub Copilot
 
-To use the MCP server in local mode with GitHub Copilot (when available), create a local `.vscode/mcp.json` configuration file in your project root:
+To use the MCP server in local mode with GitHub Copilot, create a local `.vscode/mcp.json` configuration file in your project root:
 
 ```json
 {
@@ -202,7 +185,7 @@ To use the MCP server in local mode with GitHub Copilot (when available), create
 
 Once deployment is complete, you'll see the URLs of all deployed services in the terminal.
 
-### Cost Estimation
+### Cost estimation
 
 The application uses serverless and consumption-based Azure services to minimize costs:
 
@@ -221,16 +204,6 @@ To clean up all the Azure resources created by this sample:
 ```bash
 azd down --purge
 ```
-
-## Features
-
-- **Model Context Protocol Integration**: Built-in MCP server enabling AI agents to interact with the pizza ordering system
-- **Serverless Architecture**: Fully serverless deployment using Azure Functions and Container Apps
-- **Real-time Dashboard**: Live order tracking and system monitoring
-- **Multi-service Architecture**: Demonstrates microservices patterns with Azure
-- **TypeScript**: Full TypeScript support across all services
-- **Local Development**: Complete local development environment with hot reload
-- **Production Ready**: Includes monitoring, logging, and error handling
 
 ## Resources
 
@@ -256,14 +229,6 @@ If you encounter issues while running or deploying this sample:
 4. **Node.js version**: Ensure you're using Node.js 20 or higher
 
 For more detailed troubleshooting, check the individual README files in each service directory.
-
-## Contributing
-
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Trademarks
 
