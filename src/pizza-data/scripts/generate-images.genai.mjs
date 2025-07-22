@@ -5,8 +5,8 @@
 // Note that you need to set GENAISCRIPT_IMAGE_MODEL env variable to either
 // "openai:dall-e-3" or "azure:dall-e-3" to run this script.
 
-import pizzasData from '../data/pizzas.json' with { type: "json" };
-import toppingsData from '../data/toppings.json' with { type: "json" };
+import pizzasData from '../../pizza-api/data/pizzas.json' with { type: "json" };
+import toppingsData from '../../pizza-api/data/toppings.json' with { type: "json" };
 import sharp from 'sharp';
 
 const toppingsMap = new Map(
@@ -90,5 +90,5 @@ for (const topping of toppingsData) {
 
 // ----------------------------------------------------------------------------
 // Save updated files with imageUrls
-await workspace.writeText("data/pizzas.json", JSON.stringify(pizzasData, null, 2));
-await workspace.writeText("data/toppings.json", JSON.stringify(toppingsData, null, 2));
+await workspace.writeText("../pizza-api/data/pizzas.json", JSON.stringify(pizzasData, null, 2));
+await workspace.writeText("../pizza-api/data/toppings.json", JSON.stringify(toppingsData, null, 2));

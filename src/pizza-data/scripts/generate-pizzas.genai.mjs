@@ -1,6 +1,6 @@
 // This script uses GenAIScript (https://aka.ms/genaiscript)
 // to generate the menu for a pizza restaurant.
-import { z } from "genaiscript/runtime";
+import { z } from "@genaiscript/runtime";
 
 const role = `## Role
 You're a renowned italian chef with a passion for pizza. You have a deep knowledge of classic Italian cuisine and the taste of american customers.`;
@@ -115,5 +115,5 @@ for (const pizza of parsedPizzas) {
 // ----------------------------------------------------------------------------
 // Save files
 
-await workspace.writeText("data/pizzas.json", finalPizzas);
-await workspace.writeText("data/toppings.json", toppings);
+await workspace.writeText("../pizza-api/data/pizzas.json", finalPizzas);
+await workspace.writeText("../pizza-api/data/toppings.json", toppings);

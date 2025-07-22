@@ -12,9 +12,7 @@
     "start:host": "func start",
     "start": "concurrently npm:start:* npm:watch --raw --kill-others",
     "update:local-settings": "node ./scripts/update-local-settings.mjs",
-    "postinstall": "npm run update:local-settings",
-    "generate:pizzas": "npx -y genaiscript@latest run generate-pizzas",
-    "generate:images": "npx -y genaiscript@latest run generate-images"
+    "postinstall": "npm run update:local-settings"
   },
   "author": "Microsoft",
   "license": "MIT",
@@ -34,8 +32,6 @@
     "azurite": "^3",
     "concurrently": "^9",
     "rimraf": "^6.0.1",
-    "sharp": "^0.34.1",
-    "typescript": "^5",
-    "zod": "^3.24.2"
+    "typescript": "^5"
   }
 }
