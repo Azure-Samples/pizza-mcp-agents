@@ -4,8 +4,8 @@ info:
   description: API for managing pizza orders and related operations
   version: 1.0.0
 servers:
-  - url: https://func-pizza-api-vqqlxwmln5lf4.azurewebsites.net/api
-    description: Production server
+  - url: <PIZZA_API_HOST>/api
+    description: Pizza API server
 paths:
   /:
     get:
