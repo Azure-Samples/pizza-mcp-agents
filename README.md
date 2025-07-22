@@ -1,17 +1,98 @@
+<div align="center">
+
+<img src="./docs/images/logo.png" alt="" align="center" height="96" />
+
 # Pizza API and MCP server for building AI Agents
+
+[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Azure-Samples/pizza-mcp-agents/build.yaml?style=flat-square&label=Build)](https://github.com/Azure-Samples/pizza-mcp-agents/actions)
+![Node version](https://img.shields.io/badge/Node.js->=20-3c873a?style=flat-square)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+
+⭐ If you like this sample, star it on GitHub — it helps a lot!
+
+[Overview](#overview) • [Architecture](#architecture) • [Getting started](#getting-started) • [Local development](#local-development) • [Deploy to Azure](#deploy-to-azure)
+
+</div>
+
+## Overview
+
+This project demonstrates how to build AI agents that can interact with real-world APIs using the **Model Context Protocol (MCP)**. It features a complete pizza ordering system with a serverless API, web interfaces, and an MCP server that enables AI agents to browse menus, place orders, and track order status.
+
+The system consists of multiple interconnected services:
+- **Pizza API**: Serverless Azure Functions API for pizza ordering
+- **Pizza MCP Server**: Model Context Protocol server enabling AI agent interactions
+- **Pizza Website**: Live order dashboard built with Azure Static Web Apps
+- **Registration System**: User authentication and management for the pizza ordering system
+
+> [!TIP]
+> You can test this application locally without deployment needed or any cloud costs. The MCP server works with popular AI tools like GitHub Copilot, Claude, and other MCP-compatible clients.
+
+## Architecture
+
+The application follows a microservices architecture deployed on Azure:
+
+```mermaid
+graph TB
+    A[AI Agent/Client] -->|MCP Protocol| B[Pizza MCP Server]
+    B -->|HTTP| C[Pizza API]
+    C --> D[Azure Cosmos DB]
+    C --> E[Azure Blob Storage]
+    F[Pizza Website] -->|HTTP| C
+    G[Registration Website] --> H[Registration API]
+    H --> I[User Database]
+    
+    subgraph "Azure Container Apps"
+        B
+    end
+    
+    subgraph "Azure Functions"
+        C
+        H
+    end
+    
+    subgraph "Azure Static Web Apps"
+        F
+        G
+    end
+```
+
+### Core Components
+
+- **Pizza MCP Server** (Azure Container Apps): Exposes the pizza API through Model Context Protocol, enabling AI agents to interact with the pizza ordering system
+- **Pizza API** (Azure Functions): RESTful API handling pizza menu, orders, and business logic
+- **Pizza Website** (Azure Static Web Apps): Real-time dashboard for monitoring orders and system status
+- **Registration System** (Azure Functions + Static Web Apps): User authentication and profile management
+- **Storage Layer** (Azure Cosmos DB + Blob Storage): Data persistence for orders, user profiles, and static assets
+
+### MCP Tools Available
+
+The Pizza MCP server provides these tools for AI agents:
+
+| Tool | Description |
+|------|-------------|
+| `get_pizzas` | Retrieve all pizzas from the menu |
+| `get_pizza_by_id` | Get specific pizza details by ID |
+| `get_toppings` | List available toppings (filterable by category) |
+| `get_topping_by_id` | Get specific topping details |
+| `get_topping_categories` | List all topping categories |
+| `get_orders` | Retrieve orders (filterable by user, status, time) |
+| `get_order_by_id` | Get specific order details |
+| `place_order` | Create a new pizza order |
+| `delete_order_by_id` | Cancel pending orders |
+| `get_image` | Retrieve image URLs for pizzas and toppings |
 
 ## Getting started
 
-There are multiple ways to get started with this project.
-
-The quickest way is to use [GitHub Codespaces](#use-github-codespaces) that provides a preconfigured environment for you. Alternatively, you can [set up your local environment](#use-your-local-environment) following the instructions below.
+There are multiple ways to get started with this project. The quickest way is to use [GitHub Codespaces](#use-github-codespaces) that provides a preconfigured environment for you. Alternatively, you can [set up your local environment](#use-your-local-environment) following the instructions below.
 
 <details open>
 <summary><h3>Use GitHub Codespaces</h3></summary>
 
 You can run this project directly in your browser by using GitHub Codespaces, which will open a web-based VS Code:
 
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=flat-square&label=GitHub+Codespaces&message=Open&color=blue&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref&quickstart=true)
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=flat-square&label=GitHub+Codespaces&message=Open&color=blue&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
 
 </details>
 
@@ -32,13 +113,13 @@ You will also need to have [Docker](https://www.docker.com/get-started/) install
 You need to install following tools to work on your local machine:
 
 - [Node.js LTS](https://nodejs.org/en/download)
-- [Docker](https://www.docker.com/get-started/)
 - [Azure Developer CLI](https://aka.ms/azure-dev/install)
 - [Git](https://git-scm.com/downloads)
 - [PowerShell 7+](https://github.com/powershell/powershell) _(for Windows users only)_
   - **Important**: Ensure you can run `pwsh.exe` from a PowerShell command. If this fails, you likely need to upgrade PowerShell.
   - Instead of Powershell, you can also use Git Bash or WSL to run the Azure Developer CLI commands.
 - [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-javascript) _(should be installed automatically with NPM, only install manually if the API fails to start)_
+- [Docker](https://www.docker.com/get-started/)
 
 Then you can get the project code:
 
@@ -50,21 +131,140 @@ Then you can get the project code:
 
 </details>
 
-## Deploy the project
+## Local development
 
-After setting up your environment, you can deploy the project to Azure with these commands:
+After setting up your environment, you can run the entire application locally:
 
 ```bash
-azd auth login
-azd up
+# Install dependencies for all services
+npm install
+
+# Start all services locally
+npm start
 ```
 
-You can check the `README.md` file in each directory for more specific instructions.
+This will start:
+- **Pizza Website**: http://localhost:4280
+- **Registration Website**: http://localhost:5173  
+- **Pizza API**: http://localhost:7071
+- **Pizza MCP Server**: http://localhost:3000
+
+### Testing the MCP Server
+
+You can test the MCP server using the MCP Inspector:
+
+1. Install and start MCP Inspector:
+   ```bash
+   npx -y @modelcontextprotocol/inspector
+   ```
+
+2. In your browser, open the MCP Inspector (the URL will be shown in the terminal)
+
+3. Configure the connection:
+   - **Transport**: SSE or Streamable HTTP
+   - **URL**: `http://localhost:3000/sse` (for SSE) or `http://localhost:3000/mcp` (for Streamable HTTP)
+
+4. Click **Connect** and explore the available tools
+
+### Using with GitHub Copilot
+
+To use the MCP server with GitHub Copilot (when available), create a local `mcp.json` configuration file in your project root:
+
+```json
+{
+  "servers": {
+    "pizza": {
+      "command": "node",
+      "args": ["src/pizza-mcp/dist/local.js"],
+      "env": {
+        "PIZZA_API_URL": "http://localhost:7071"
+      }
+    }
+  }
+}
+```
+
+## Deploy to Azure
+
+### Prerequisites
+
+- **Azure account**: If you're new to Azure, [get an Azure account for free](https://azure.microsoft.com/free) to get free Azure credits to get started
+- **Azure subscription with access enabled for the Azure OpenAI service** (if using AI features): You can request access with [this form](https://aka.ms/oaiapply)
+- **Azure account permissions**: Your Azure account must have `Microsoft.Authorization/roleAssignments/write` permissions, such as [Role Based Access Control Administrator](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#role-based-access-control-administrator-preview), [User Access Administrator](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#user-access-administrator), or [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner)
+
+### Deploy to Azure
+
+1. Open a terminal and navigate to the root of the project
+2. Authenticate with Azure by running `azd auth login`
+3. Run `azd up` to deploy the application to Azure. This will provision Azure resources and deploy all services
+   - You will be prompted to select a base location for the resources
+   - The deployment process will take a few minutes
+
+Once deployment is complete, you'll see the URLs of all deployed services in the terminal.
+
+### Cost Estimation
+
+The application uses serverless and consumption-based Azure services to minimize costs:
+
+- **Azure Functions**: Pay-per-execution pricing
+- **Azure Static Web Apps**: Free tier available
+- **Azure Container Apps**: Pay for actual usage
+- **Azure Cosmos DB**: Serverless pricing model
+- **Azure Blob Storage**: Pay for storage used
+
+Estimated monthly cost for light usage (development/testing): **$10-30 USD**
+
+### Clean up resources
+
+To clean up all the Azure resources created by this sample:
+
+```bash
+azd down --purge
+```
+
+## Features
+
+- **Model Context Protocol Integration**: Built-in MCP server enabling AI agents to interact with the pizza ordering system
+- **Serverless Architecture**: Fully serverless deployment using Azure Functions and Container Apps
+- **Real-time Dashboard**: Live order tracking and system monitoring
+- **Multi-service Architecture**: Demonstrates microservices patterns with Azure
+- **TypeScript**: Full TypeScript support across all services
+- **Local Development**: Complete local development environment with hot reload
+- **Production Ready**: Includes monitoring, logging, and error handling
+
+## Resources
+
+Here are some resources to learn more about the technologies used in this project:
+
+- [Model Context Protocol](https://modelcontextprotocol.io/) - Learn about MCP and building AI agents
+- [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview?pivots=programming-language-javascript) - Serverless compute platform
+- [Azure Static Web Apps](https://learn.microsoft.com/azure/static-web-apps/overview) - Modern web app hosting
+- [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) - Serverless containers
+- [Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/nosql/) - NoSQL database service
+- [GitHub Copilot](https://github.com/features/copilot) - AI-powered code completion
+- [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/overview) - Developer productivity toolchain
+
+You can also find [more Azure AI samples here](https://github.com/Azure-Samples/azureai-samples).
+
+## Troubleshooting
+
+If you encounter issues while running or deploying this sample:
+
+1. **Dependencies**: Ensure all required tools are installed and up to date
+2. **Ports**: Make sure required ports (3000, 4280, 5173, 7071) are not in use
+3. **Azure CLI**: Verify you're authenticated with `azd auth login`
+4. **Node.js version**: Ensure you're using Node.js 20 or higher
+
+For more detailed troubleshooting, check the individual README files in each service directory.
+
+## Contributing
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
