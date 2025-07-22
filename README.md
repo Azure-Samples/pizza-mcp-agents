@@ -35,7 +35,7 @@ This sample uses a microservices architecture deployed on Azure:
   <img src="./docs/images/architecture.drawio.png" alt="Application architecture" />
 </div>
 
-### Core Components
+### Core components
 
 - **Pizza API** (Azure Functions): RESTful API handling pizza menu, orders, and business logic
 - **Pizza MCP server** (Azure Container Apps): Exposes the pizza API through MCP, enabling AI agents to interact with the pizza ordering system
