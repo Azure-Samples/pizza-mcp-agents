@@ -168,14 +168,14 @@ You can test the MCP server using the MCP Inspector:
 
 ### Using with GitHub Copilot
 
-To use the MCP server with GitHub Copilot (when available), create a local `mcp.json` configuration file in your project root:
+To use the MCP server in local mode with GitHub Copilot (when available), create a local `.vscode/mcp.json` configuration file in your project root:
 
 ```json
 {
   "servers": {
-    "pizza": {
-      "command": "node",
-      "args": ["src/pizza-mcp/dist/local.js"],
+    "pizza-mcp": {
+      "command": "npm",
+      "args": ["run", "-s", "mcp:local"],
       "env": {
         "PIZZA_API_URL": "http://localhost:7071"
       }
@@ -252,7 +252,7 @@ If you encounter issues while running or deploying this sample:
 
 1. **Dependencies**: Ensure all required tools are installed and up to date
 2. **Ports**: Make sure required ports (3000, 4280, 5173, 7071) are not in use
-3. **Azure CLI**: Verify you're authenticated with `azd auth login`
+3. **Azure Developer CLI**: Verify you're authenticated with `azd auth login`
 4. **Node.js version**: Ensure you're using Node.js 20 or higher
 
 For more detailed troubleshooting, check the individual README files in each service directory.

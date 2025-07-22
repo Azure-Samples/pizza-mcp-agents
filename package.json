@@ -1,0 +1,35 @@
+{
+  "name": "pizza-mcp-agents",
+  "description": "Serverless API and Model Context Protocol (MCP) integration to order pizzas from AI agents.",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "run-on-output -n 'ready' -p 'pizza.*lock,registration.*lock' concurrently \"npm:start:*\" --kill-others",
+    "start:pizza": "cd src/pizza-website && npm start",
+    "start:registration": "cd src/registration-website && npm run start",
+    "start:mcp": "cd src/pizza-mcp && npm start",
+    "ready": "echo '\n🚀 All services ready 🚀\n\n- Pizza webapp  : http://localhost:4280\n- Registration webapp : http://localhost:5173\n- Pizza API    : http://localhost:7071\n- Pizza MCP    : http://localhost:3000/mcp\n'",
+    "mcp:local": "cd src/pizza-mcp && npm run -s dev:local",
+    "format": "prettier --list-different --write .",
+    "preinstall": "cd src/pizza-website && npm install && cd ../registration-website && npm install && cd ../pizza-api && npm install && cd ../registration-api && npm install && cd ../pizza-mcp && npm install"
+  },
+  "author": "Microsoft",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9",
+    "prettier": "^3",
+    "run-on-output": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 120,
+    "bracketSpacing": true
+  }
+}

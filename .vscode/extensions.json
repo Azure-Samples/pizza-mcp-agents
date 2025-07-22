@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "ms-azuretools.azure-dev",
+    "ms-azuretools.vscode-azurefunctions",
+    "ms-azuretools.vscode-cosmosdb",
+    "ms-azuretools.vscode-bicep",
+    "esbenp.prettier-vscode",
+    "humao.rest-client",
+    "hediet.vscode-drawio",
+    "editorconfig.editorconfig",
+    "github.copilot",
+    "genaiscript.genaiscript-vscode",
+    "ms-azuretools.vscode-azure-github-copilot",
+  ]
+}
