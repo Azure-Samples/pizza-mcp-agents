@@ -51,6 +51,15 @@ app.http('orders-post', {
         };
       }
 
+      // Validate total pizza quantity doesn't exceed 50
+      const totalPizzaCount = requestBody.items.reduce((sum, item) => sum + item.quantity, 0);
+      if (totalPizzaCount > 50) {
+        return {
+          status: 400,
+          jsonBody: { error: 'Order cannot exceed 50 pizzas in total' }
+        };
+      }
+
       // Limit: max 5 active orders per user
       const activeOrders = await dataService.getOrders({
         userId: requestBody.userId,

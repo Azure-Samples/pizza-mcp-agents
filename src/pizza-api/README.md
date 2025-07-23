@@ -63,6 +63,11 @@ A user can have a maximum of **5 active orders** (status: `pending` or `in-prepa
 - HTTP 429 Too Many Requests
 - Body: `{ "error": "Too many active orders: limit is 5 per user" }`
 
+Each individual order is limited to a maximum of **50 pizzas total**. If you try to order more than 50 pizzas in a single order, the API will return:
+
+- HTTP 400 Bad Request
+- Body: `{ "error": "Order cannot exceed 50 pizzas in total" }`
+
 This ensures fair use and prevents abuse.
 
 ### Order Status Automation

@@ -110,6 +110,10 @@ paths:
       description: |
         Places a new order with pizzas (requires userId).
         
+        Order limits:
+        - Maximum 50 pizzas per order
+        - Maximum 5 active orders per user
+        
         The estimated completion time is as follows:
         - 3-5 minutes for 1-2 pizzas, plus 1 minute for each additional pizza.
         
@@ -131,7 +135,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/OrderResponse'
         '400':
-          description: Invalid request
+          description: Invalid request (e.g., missing required fields, invalid pizza/topping IDs, invalid quantities, or order exceeds 50 pizzas limit)
           content:
             application/json:
               schema:
