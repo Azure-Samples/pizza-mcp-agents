@@ -37,11 +37,12 @@ This sample uses a microservices architecture deployed on Azure:
 
 ### Core components
 
-- **Pizza API** (Azure Functions): RESTful API handling pizza menu, orders, and business logic
-- **Pizza MCP server** (Azure Container Apps): Exposes the pizza API through MCP, enabling AI agents to interact with the pizza ordering system
-- **Pizza web app** (Azure Static Web Apps): Real-time dashboard for monitoring orders and system status
-- **Registration API** (Azure Functions): User registration for accessing the pizza ordering system
-- **Registration web app** (Azure Static Web Apps): Web interface for user registration
+- [**Pizza API**](./src/pizza-api/README.md) (Azure Functions): RESTful API handling pizza menu, orders, and business logic
+- [**Pizza MCP server**](./src/pizza-mcp/README.md) (Azure Container Apps): Exposes the pizza API through MCP, enabling AI agents to interact with the pizza ordering system
+- [**Pizza web app**](./src/pizza-webapp/README.md) (Azure Static Web Apps): Real-time dashboard for monitoring orders and system status
+- [**Registration API**](./src/registration-api/README.md) (Azure Functions): User registration for accessing the pizza ordering system
+- [**Registration web app**](./src/registration-webapp/README.md) (Azure Static Web Apps): Web interface for user registration
+- [**Pizza data**](./src/pizza-data/README.md): Scripts used to generate the pizza and topping data and images used in the API.
 
 ### MCP Tools Available
 
