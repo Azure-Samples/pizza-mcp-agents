@@ -157,7 +157,7 @@ module pizzaApiFunction 'br/public:avm/res/web/site:0.13.0' = {
       }
       runtime: {
         name: 'node'
-        version: '20'
+        version: '22'
       }
     }
     storageAccountResourceId: storage.outputs.resourceId
@@ -237,7 +237,7 @@ module registrationApiFunction 'br/public:avm/res/web/site:0.13.0' = {
       }
       runtime: {
         name: 'node'
-        version: '20'
+        version: '22'
       }
     }
     storageAccountResourceId: storage.outputs.resourceId
@@ -590,4 +590,4 @@ output AZURE_OPENAI_API_ENDPOINT string = openAiUrl
 output AZURE_OPENAI_API_CHAT_DEPLOYMENT_NAME string = chatModelName
 output AZURE_OPENAI_API_INSTANCE_NAME string = useOpenAi ? openAi.outputs.name : ''
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
-output GENAISCRIPT_DEFAULT_MODEL string = useOpenAi ? 'azure:${chatModelName}' : 'gpt-4.1'
+output GENAISCRIPT_DEFAULT_MODEL string = useOpenAi ? 'azure:${chatModelName}' : 'github:gpt-4.1'
