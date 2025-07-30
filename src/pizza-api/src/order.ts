@@ -15,6 +15,7 @@ export interface OrderItem {
 export interface Order {
   id: string;
   userId: string; // Mandatory userId parameter
+  nickname?: string; // Optional nickname for the order
   createdAt: string; // ISO date string
   items: OrderItem[];
   estimatedCompletionAt: string; // ISO date string for estimated completion time

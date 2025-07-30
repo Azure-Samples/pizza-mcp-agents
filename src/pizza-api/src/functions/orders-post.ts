@@ -5,6 +5,7 @@ import { OrderStatus, type OrderItem } from '../order';
 
 interface CreateOrderRequest {
   userId: string;
+  nickname?: string;
   items: {
     pizzaId: string;
     quantity: number;
@@ -135,6 +136,7 @@ app.http('orders-post', {
       // Create the order
       const order = await dataService.createOrder({
         userId: requestBody.userId,
+        nickname: requestBody.nickname,
         createdAt: now.toISOString(),
         items: orderItems,
         estimatedCompletionAt: estimatedCompletionAt.toISOString(),

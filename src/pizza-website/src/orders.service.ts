@@ -1,5 +1,6 @@
 export interface PizzaOrder {
   id: string;
+  nickname?: string; // Optional nickname for the order
   createdAt: string;
   items: Array<{
     pizzaId: string;

@@ -57,7 +57,7 @@ The Pizza MCP server provides these tools for AI agents:
 | `get_topping_categories` | List all topping categories |
 | `get_orders` | Retrieve orders (filterable by user, status, time) |
 | `get_order_by_id` | Get specific order details |
-| `place_order` | Create a new pizza order (needs `userId`) |
+| `place_order` | Create a new pizza order (needs `userId`, optional `nickname`) |
 | `delete_order_by_id` | Cancel pending orders (needs `userId`) |
 
 ## Getting started

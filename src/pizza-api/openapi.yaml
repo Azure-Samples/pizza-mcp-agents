@@ -468,6 +468,10 @@ components:
         userId:
           type: string
           example: "user123"
+        nickname:
+          type: string
+          description: Optional nickname for the order
+          example: "My Pizza Order"
         createdAt:
           type: string
           format: date-time
@@ -544,6 +548,10 @@ components:
         userId:
           type: string
           example: "user123"
+        nickname:
+          type: string
+          description: Optional nickname for the order that will be displayed instead of order ID (first 8 characters will be shown)
+          example: "My Pizza Order"
         items:
           type: array
           items:

@@ -142,6 +142,10 @@ export class PizzaDashboard extends LitElement {
 
   protected renderOrder = (order: PizzaOrder, isLeaving = false) => {
     const animClass = isLeaving ? "fade-out" : "";
+    // Use nickname (first 8 chars) if available, otherwise use orderId (first 8 chars)
+    const displayId = order.nickname 
+      ? `${order.nickname.slice(0, 10)}` 
+      : `#${order.id.slice(-6)}`;
     return html`
       <div
         data-order-id="${order.id}"
@@ -151,7 +155,7 @@ export class PizzaDashboard extends LitElement {
           : undefined}
       >
         <div class="${this.getOrderBoxClass(order)}">
-          <div class="order-id">#${order.id.slice(-6)}</div>
+          <div class="order-id">${displayId}</div>
           <div class="order-status">
             <div class="order-status-inner">
               ${this.getOrderDisplayStatus(order)}

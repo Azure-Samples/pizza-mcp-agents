@@ -80,6 +80,26 @@ Content-Type: application/json
   ]
 }
 
+### Create a new order with nickname
+POST {{api_host}}/api/orders
+Content-Type: application/json
+
+{
+  "userId": "user123",
+  "nickname": "John's Order",
+  "items": [
+    {
+      "pizzaId": "1",
+      "quantity": 1
+    },
+    {
+      "pizzaId": "2",
+      "quantity": 1,
+      "extraToppingIds": ["3"]
+    }
+  ]
+}
+
 ### Delete/cancel an order
 DELETE {{api_host}}/api/orders/12345?userId=user123
 

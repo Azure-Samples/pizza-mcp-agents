@@ -70,6 +70,23 @@ Each individual order is limited to a maximum of **50 pizzas total**. If you try
 
 This ensures fair use and prevents abuse.
 
+### Order Nicknames
+
+When placing an order, you can optionally provide a `nickname` field that will be displayed in the pizza website dashboard instead of the order ID. This makes it easier to identify orders in the interface.
+
+**Example:**
+```json
+{
+  "userId": "user123",
+  "nickname": "John's Lunch Order",
+  "items": [...]
+}
+```
+
+- If a nickname is provided, the pizza website will display the first 8 characters of the nickname
+- If no nickname is provided, the website will display the last 6 characters of the order ID preceded by a `#` symbol
+- The nickname field is optional and doesn't affect order processing
+
 ### Order Status Automation
 
 Order statuses are updated automatically by a timer function every 40 seconds:
