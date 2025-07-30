@@ -5,28 +5,43 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(__dirname, '../../../.env') });
 
+interface User {
+  hash: string;
+  accessToken: string;
+  createdAt: string;
+}
+
 export class UserDbService {
   private static instance: UserDbService;
   private client: CosmosClient | undefined = undefined;
   private database: Database | undefined = undefined;
   private usersContainer: Container | undefined = undefined;
   private isCosmosDbInitialized = false;
+  private inMemoryUsers: Map<string, User> = new Map();
+  private useInMemoryDb = false;
 
   static async getInstance(): Promise<UserDbService> {
     if (!UserDbService.instance) {
       UserDbService.instance = new UserDbService();
-      await UserDbService.instance.initializeCosmosDb();
+      await UserDbService.instance.initialize();
     }
     return UserDbService.instance;
+  }
+
+  protected async initialize(): Promise<void> {
+    const endpoint = process.env.AZURE_COSMOSDB_NOSQL_ENDPOINT;
+    if (!endpoint) {
+      console.log('AZURE_COSMOSDB_NOSQL_ENDPOINT not defined, using in-memory database for users');
+      this.useInMemoryDb = true;
+      return;
+    }
+    
+    await this.initializeCosmosDb();
   }
 
   protected async initializeCosmosDb(): Promise<void> {
     try {
       const endpoint = process.env.AZURE_COSMOSDB_NOSQL_ENDPOINT;
-      if (!endpoint) {
-        console.warn('Cosmos DB endpoint not found in environment variables.');
-        return;
-      }
       const credential = new DefaultAzureCredential();
       this.client = new CosmosClient({ endpoint, aadCredentials: credential });
       const databaseId = 'userDB';
@@ -41,10 +56,15 @@ export class UserDbService {
       console.log('Connected to Cosmos DB for users');
     } catch (error) {
       console.error('Failed to initialize Cosmos DB for users:', error);
+      throw error; // Re-throw the error as we should not fall back if connection fails when endpoint is defined
     }
   }
 
-  async getUserByHash(hash: string): Promise<any | undefined> {
+  async getUserByHash(hash: string): Promise<User | undefined> {
+    if (this.useInMemoryDb) {
+      return this.inMemoryUsers.get(hash);
+    }
+    
     if (!this.isCosmosDbInitialized) return undefined;
     try {
       const querySpec = {
@@ -60,14 +80,20 @@ export class UserDbService {
     }
   }
 
-  async createUser(hash: string, accessToken: string): Promise<any> {
-    if (!this.isCosmosDbInitialized) throw new Error('Cosmos DB not initialized');
-    const user = { 
+  async createUser(hash: string, accessToken: string): Promise<User> {
+    const user: User = { 
       hash, 
       accessToken,
       createdAt: new Date().toISOString()
     };
+    
+    if (this.useInMemoryDb) {
+      this.inMemoryUsers.set(hash, user);
+      return user;
+    }
+    
+    if (!this.isCosmosDbInitialized) throw new Error('Cosmos DB not initialized');
     const { resource } = await this.usersContainer!.items.create(user);
-    return resource;
+    return resource as User;
   }
 }
