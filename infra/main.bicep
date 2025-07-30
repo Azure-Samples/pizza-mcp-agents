@@ -28,9 +28,9 @@ param location string
 param resourceGroupName string = ''
 param pizzaApiServiceName string = 'pizza-api'
 param pizzaMcpServiceName string = 'pizza-mcp'
-param pizzaWebappName string = 'pizza-website'
+param pizzaWebappName string = 'pizza-webapp'
 param registrationApiServiceName string = 'registration-api'
-param registrationWebappName string = 'registration-website'
+param registrationWebappName string = 'registration-webapp'
 param blobContainerName string = 'blobs'
 
 @description('Location for the OpenAI resource group')

@@ -9,8 +9,8 @@ services:
     language: ts
     host: function
 
-  pizza-website:
-    project: ./src/pizza-website
+  pizza-webapp:
+    project: ./src/pizza-webapp
     dist: dist
     language: ts
     host: staticwebapp
@@ -29,8 +29,8 @@ services:
     language: ts
     host: function
 
-  registration-website:
-    project: ./src/registration-website
+  registration-webapp:
+    project: ./src/registration-webapp
     dist: dist
     language: ts
     host: staticwebapp

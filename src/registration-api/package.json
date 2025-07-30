@@ -8,8 +8,8 @@
     "watch": "tsc -w",
     "clean": "rimraf dist",
     "prestart": "npm run clean",
-    "start:storage": "azurite --silent --location ./.azurite --debug ./.azurite/debug.log",
-    "start:host": "func start",
+    "dev:storage": "azurite --silent --location ./.azurite --debug ./.azurite/debug.log",
+    "start:host": "func start --port 7072",
     "start": "concurrently npm:start:* npm:watch --raw --kill-others",
     "update:local-settings": "node ./scripts/update-local-settings.mjs",
     "postinstall": "npm run update:local-settings"

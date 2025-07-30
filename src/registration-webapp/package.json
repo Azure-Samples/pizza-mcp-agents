@@ -1,5 +1,5 @@
 {
-  "name": "registration-website",
+  "name": "registration-webapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,7 @@
     "serve": "concurrently npm:serve:* --raw --kill-others",
     "serve:api": "cd ../registration-api && npm start",
     "serve:webapp": "npm run dev -s",
-    "dev": "vite",
+    "dev": "vite --host --port 8008",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

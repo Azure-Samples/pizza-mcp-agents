@@ -1,5 +1,5 @@
 ---
-applyTo: "src/*-website/**"
+applyTo: "src/*-webapp/**"
 ---
 
 ## Guidance for Code Generation
