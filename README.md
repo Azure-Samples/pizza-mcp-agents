@@ -6,7 +6,7 @@
 
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Azure-Samples/pizza-mcp-agents/build.yaml?style=flat-square&label=Build)](https://github.com/Azure-Samples/pizza-mcp-agents/actions)
-![Node version](https://img.shields.io/badge/Node.js->=20-3c873a?style=flat-square)
+![Node version](https://img.shields.io/badge/Node.js->=22-3c873a?style=flat-square)
 [![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 

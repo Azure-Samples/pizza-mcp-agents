@@ -3,7 +3,7 @@
 # Azure Functions Pizza API
 
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Microsoft/open-hack-build-25?hide_repo_select=true&ref=main&quickstart=true)
-![Node version](https://img.shields.io/badge/Node.js->=20-3c873a?style=flat-square)
+![Node version](https://img.shields.io/badge/Node.js->=22-3c873a?style=flat-square)
 
 [Overview](#overview) • [API Endpoints](#api-endpoints) • [Development](#development)
 
