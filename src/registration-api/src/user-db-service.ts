@@ -3,7 +3,7 @@ import { DefaultAzureCredential } from '@azure/identity';
 import path from 'node:path';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
+dotenv.config({ path: path.join(__dirname, '../../../.env'), quiet: true });
 
 interface User {
   hash: string;
