@@ -5,15 +5,12 @@
 test/
 docs/
 infra/
-node_modules/@types/
-node_modules/azure-functions-core-tools/
-node_modules/typescript/
+node_modules/
 *.js.map
-*.ts
+/*.yaml
 .git*
 *.env*
 /*.http
-tsconfig.json
 azure.yaml
 local.settings.json
 README.md
