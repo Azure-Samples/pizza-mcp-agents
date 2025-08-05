@@ -1,9 +1,11 @@
 <div align="center">
 
-# Azure Container Apps Pizza MCP server
+# Pizza MCP server (Azure Container Apps)
 
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
 ![Node version](https://img.shields.io/badge/Node.js->=22-3c873a?style=flat-square)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Fastify](https://img.shields.io/badge/Fastify-black?style=flat-square&logo=fastify)](https://www.fastify.io)
 
 [Overview](#overview) • [MCP tools](#mcp-tools) • [Development](#development)
 
@@ -14,11 +16,15 @@
 This is the Pizza MCP server, exposing the Pizza API as a Model Context Protocol (MCP) server. The MCP server allows LLMs to interact with the pizza ordering process through MCP tools.
 
 This server supports the following transport types:
-- **SSE**
 - **Streamable HTTP**
+- **SSE** (legacy, not recommended for new applications)
 - **Stdio** (currently only supported when starting the server locally with `npm start`)
 
 The remote server is deployed with [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview).
+
+<div align="center">
+  <img src="../pizza-api/docs/images/architecture.drawio.png" alt="Service architecture" />
+</div>
 
 ## MCP tools
 
@@ -45,32 +51,25 @@ First, you need to start the Pizza API and Pizza MCP server locally.
     npx -y @modelcontextprotocol/inspector
     ```
 2. Ctrl+click to load the MCP Inspector web app from the URL displayed by the app (e.g. http://127.0.0.1:6274)
-3. In the MCP Inspector, set the transport type to **SSE** and 
-3. Put `http://localhost:3000/sse` in the URL field and click on the **Connect** button.
+3. In the MCP Inspector, set the transport type to **HTTP** and 
+3. Put `http://localhost:3000/mcp` in the URL field and click on the **Connect** button.
 4. In the **Tools** tab, select **List Tools**. Click on a tool and select **Run Tool**.
 
 > [!NOTE]
-> This application also provides a streamable HTTP endpoint if you use `/mcp` instead of `/sse` in the URL field. 
+> This application also provides an SSE endpoint if you use `/sse` instead of `/mcp` in the URL field. 
 
 ## Development
 
-### Setup development environment
+### Getting started
 
-You can run this project directly in your browser by using GitHub Codespaces, which will open a web-based VS Code.
-
-1. [**Fork**](https://github.com/Azure-Samples/pizza-mcp-agents/fork) the project to create your own copy of this repository.
-2. On your forked repository, select the **Code** button, then the **Codespaces** tab, and clink on the button **Create codespace on main**.
-   ![Screenshot showing how to create a new codespace](../../docs/images/codespaces.png?raw=true)
-3. Wait for the Codespace to be created, it should take a few minutes.
-
-If you prefer to run the project locally, follow [these instructions](../../README.md#use-your-local-environment).
+Follow the instructions [here](../../README.md#getting-started) to set up the development environment for the entire Pizza MCP Agents project.
 
 ### Run the application
 
 You can run the following command to run the application server:
 
 ```bash
-npm start:server
+npm start
 ```
 
 Alternatively, you can also use Docker to run the application:
@@ -81,3 +80,27 @@ npm run docker:run
 ```
 
 This will start the application in a Docker container. The MCP server is then available at `http://localhost:3000/sse` or `http://localhost:3000/mcp` for the SSE and streamable HTTP endpoints, respectively.
+
+### Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm start` | Start the MCP server with HTTP and SSE endpoints |
+| `npm run start:local` | Start the MCP server with STDIO transport |
+| `npm run dev` | Start the MCP server with hot reload |
+| `npm run dev:local` | Start the MCP server with hot reload and STDIO transport |
+| `npm run build` | Build the TypeScript source |
+| `npm run clean` | Clean build artifacts |
+| `npm run docker:build` | Build the Docker image for the MCP server |
+| `npm run docker:run` | Run the Docker container for the MCP server |
+
+### Configuration
+
+The application uses environment variables for configuration:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PIZZA_API_URL` | URL of the Pizza API server | `http://localhost:7071` |
+
+> [!NOTE]
+> When running locally without any Pizza API configuration set, the MCP server will default to using the local Pizza API server at `http://localhost:7071`. If the Pizza API is not running, the MCP server will log an error when receiving tool requests.

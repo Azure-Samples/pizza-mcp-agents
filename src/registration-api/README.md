@@ -3,7 +3,7 @@
 # Registration API (Azure Functions)
 
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
-![Node version](https://img.shields.io/badge/Node.js->=20-3c873a?style=flat-square)
+![Node version](https://img.shields.io/badge/Node.js->=22-3c873a?style=flat-square)
 [![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
 [Overview](#overview) • [Development](#development) • [API Reference](#api-reference)
@@ -19,7 +19,7 @@ This registration API serves as an authentication and authorization layer for th
 The API follows serverless best practices and is designed to handle user registration and token management with minimal latency and automatic scaling.
 
 <div align="center">
-  <img src="./docs/images/architecture.drawio.png" alt="Application architecture" />
+  <img src="./docs/images/architecture.drawio.png" alt="Service architecture" />
 </div>
 
 ### Features
@@ -54,6 +54,7 @@ You can then use the `api.http` file to test the API endpoints using the [REST C
 | `npm run build` | Build the TypeScript source |
 | `npm run clean` | Clean build artifacts |
 | `npm run dev:storage` | Start local Azurite storage emulator |
+| `update:local-settings` | Create or update `local.settings.json` with environment variables from Azure |
 
 ### Configuration
 

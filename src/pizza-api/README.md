@@ -1,9 +1,10 @@
 <div align="center">
 
-# Azure Functions Pizza API
+# Pizza API (Azure Functions)
 
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
 ![Node version](https://img.shields.io/badge/Node.js->=22-3c873a?style=flat-square)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
 [Overview](#overview) • [API Endpoints](#api-endpoints) • [Development](#development)
 
@@ -14,6 +15,17 @@
 This is the Pizza API, a serverless API that allows you to order delicious pizzas with various toppings. The API is designed to be simple and easy to use, providing endpoints for accessing pizza and topping information, placing orders, and managing your pizza experience.
 
 The API is built with [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview?pivots=programming-language-javascript).
+
+<div align="center">
+  <img src="./docs/images/architecture.drawio.png" alt="Service architecture" />
+</div>
+
+### Features
+
+- **Serverless Architecture**: Built on Azure Functions for automatic scaling and cost efficiency
+- **Pizza Management**: Retrieve pizza and topping information, including images
+- **Order Management**: Place and manage orders with real-time status updates
+- **OpenAPI Specification**: OpenAPI schema provided in YAML or JSON format
 
 ## API Endpoints
 
@@ -54,7 +66,6 @@ GET /api/orders?userId=user123&status=completed&last=60m
 ```
 
 You can view the complete API documentation by opening the [Swagger Editor](https://editor.swagger.io/?url=http://localhost:7071/api/openapi) or the [OpenAPI YAML file](http://localhost:7071/api/openapi).
-
 
 ### Order Limits
 
@@ -101,16 +112,9 @@ No manual API call is needed for these transitions.
 
 ## Development
 
-### Setup development environment
+### Getting started
 
-You can run this project directly in your browser by using GitHub Codespaces, which will open a web-based VS Code.
-
-1. [**Fork**](https://github.com/Azure-Samples/pizza-mcp-agents/fork) the project to create your own copy of this repository.
-2. On your forked repository, select the **Code** button, then the **Codespaces** tab, and clink on the button **Create codespace on main**.
-   ![Screenshot showing how to create a new codespace](../../docs/images/codespaces.png?raw=true)
-3. Wait for the Codespace to be created, it should take a few minutes.
-
-If you prefer to run the project locally, follow [these instructions](../../README.md#use-your-local-environment).
+Follow the instructions [here](../../README.md#getting-started) to set up the development environment for the entire Pizza MCP Agents project.
 
 ### Run the application
 
@@ -124,3 +128,26 @@ This command will start the Azure Functions application locally. You can test th
 
 > [!NOTE]
 > If you have not deployed the Azure resources, it will fall back to in-memory data. You can test the API without deploying it to Azure.
+
+### Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm start` | Start the development server with hot reload and Azurite storage emulator |
+| `npm run build` | Build the TypeScript source |
+| `npm run clean` | Clean build artifacts |
+| `npm run start:storage` | Start local Azurite storage emulator |
+| `update:local-settings` | Create or update `local.settings.json` with environment variables from Azure |
+
+### Configuration
+
+The application uses environment variables for configuration:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AZURE_COSMOSDB_NOSQL_ENDPOINT` | Azure Cosmos DB endpoint | `""` (not set) |
+| `AZURE_STORAGE_URL` | Azure Storage URL for images | `""` (not set) |
+| `AZURE_STORAGE_CONTAINER_NAME` | Azure Storage container name for images | `""` (not set) |
+
+> [!NOTE]
+> When running locally without any configuration set, the API will automatically use in-memory storage for the database and file access for the images, and log this behavior.

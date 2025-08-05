@@ -1,6 +1,6 @@
 <div align="center">
 
-# Registration Website (Azure Static Web Apps)
+# Registration Web App (Azure Static Web Apps)
 
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
 ![Node version](https://img.shields.io/badge/Node.js->=22-3c873a?style=flat-square)
@@ -20,7 +20,7 @@ This registration website serves as the authentication gateway for the Pizza API
 The application leverages Azure Static Web Apps' built-in authentication features, providing a secure and seamless user experience without requiring complex authentication setup.
 
 <div align="center">
-  <img src="../registration-api/docs/images/architecture.drawio.png" alt="Application architecture" />
+  <img src="../registration-api/docs/images/architecture.drawio.png" alt="Service architecture" />
 </div>
 
 ### Features
