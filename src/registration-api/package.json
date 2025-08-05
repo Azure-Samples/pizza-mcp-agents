@@ -21,10 +21,10 @@
     "@azure/cosmos": "^4.3.0",
     "@azure/functions": "^4",
     "@azure/identity": "^4.9.1",
-    "dotenv": "^16"
+    "dotenv": "^17.2.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^22.17.0",
     "azure-functions-core-tools": "^4",
     "azurite": "^3",
     "concurrently": "^9",
