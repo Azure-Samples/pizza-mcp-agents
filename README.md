@@ -187,15 +187,7 @@ Once deployment is complete, you'll see the URLs of all deployed services in the
 
 ### Cost estimation
 
-The application uses serverless and consumption-based Azure services to minimize costs:
-
-- **Azure Functions**: Pay-per-execution pricing
-- **Azure Static Web Apps**: Free tier available
-- **Azure Container Apps**: Pay for actual usage
-- **Azure Cosmos DB**: Serverless pricing model
-- **Azure Blob Storage**: Pay for storage used
-
-Estimated monthly cost for light usage (development/testing): **$10-30 USD**
+Pricing varies per region and usage, so it isn't possible to predict exact costs for your usage. However, you can use the Azure pricing calculator with pre-configured estimations to get an idea of the costs: [Azure Pricing Calculator](https://azure.com/e/6f495a8ea2b0426c8b2bf093370e01f9).
 
 ### Clean up resources
 
