@@ -7,7 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Lit](https://img.shields.io/badge/Lit-3.3-blue?style=flat-square&logo=lit&logoColor=white)](https://lit.dev)
 
-[Overview](#overview) • [Features](#features) • [Development](#development)
+[Overview](#overview) • [Development](#development)
 
 </div>
 
@@ -19,9 +19,11 @@ This registration website serves as the authentication gateway for the Pizza API
 
 The application leverages Azure Static Web Apps' built-in authentication features, providing a secure and seamless user experience without requiring complex authentication setup.
 
-<!-- TODO: architecture schema -->
+<div align="center">
+  <img src="../registration-api/docs/images/architecture.drawio.png" alt="Application architecture" />
+</div>
 
-### Components
+### Features
 
 - **Registration Interface**: Lit-based web components for user authentication and token display
 - **Authentication Service**: Azure Static Web Apps built-in authentication with GitHub and Microsoft providers
@@ -30,40 +32,9 @@ The application leverages Azure Static Web Apps' built-in authentication feature
 
 ## Development
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org) >= 22
-- [Azure Static Web Apps CLI](https://learn.microsoft.com/azure/static-web-apps/static-web-apps-cli-overview)
-- [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local)
-
 ### Getting started
 
-There are multiple ways to get started with this project.
-
-<details open>
-<summary><strong>Use GitHub Codespaces</strong></summary>
-
-The quickest way is to use GitHub Codespaces, which provides a preconfigured development environment:
-
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=blue&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
-
-</details>
-
-<details>
-<summary><strong>Use your local environment</strong></summary>
-
-1. **Fork** the project to create your own copy of this repository
-2. Clone your forked repository:
-   ```bash
-   git clone <your-repo-url>
-   cd pizza-mcp-agents/src/registration-webapp
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-</details>
+Follow the instructions [here](../../README.md#getting-started) to set up the development environment for the entire Pizza MCP Agents project.
 
 ### Run the application
 
@@ -91,25 +62,6 @@ This command will:
 | `npm run build` | Build the application for production |
 | `npm run preview` | Preview the production build locally |
 | `npm run serve` | Start both the web app and API in development mode |
-
-### Project structure
-
-```
-src/
-├── components/           # Lit web components
-│   ├── auth.ts          # Authentication component
-│   └── register.ts      # Registration and token display component
-├── auth.service.ts      # Authentication service layer
-├── index.ts            # Component exports
-└── vite-env.d.ts       # TypeScript environment definitions
-
-public/
-└── staticwebapp.config.json  # Azure Static Web Apps configuration
-
-assets/
-├── icons/              # UI icons (copy, logout, person, slice)
-└── providers/          # Identity provider logos (GitHub, Microsoft)
-```
 
 ### Component usage
 

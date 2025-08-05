@@ -1,66 +1,95 @@
 <div align="center">
 
-# Azure Functions Registration API
+# Registration API (Azure Functions)
 
-[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Microsoft/open-hack-build-25?hide_repo_select=true&ref=main&quickstart=true)
+[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/pizza-mcp-agents?hide_repo_select=true&ref=main&quickstart=true)
 ![Node version](https://img.shields.io/badge/Node.js->=20-3c873a?style=flat-square)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
-[Overview](#overview) • [API Endpoints](#api-endpoints) • [Development](#development)
+[Overview](#overview) • [Development](#development) • [API Reference](#api-reference)
 
 </div>
 
+A serverless user registration API built with [**Azure Functions**](https://learn.microsoft.com/azure/azure-functions/functions-overview?pivots=programming-language-javascript) that provides secure access token management for authenticated users. This service is part of the [Pizza MCP Agents](../../README.md) project and enables secure access to the pizza ordering system through unique user tokens.
+
 ## Overview
 
-This API provides a simple way to register or identify users and issue a unique access token for each user. It is built with [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview?pivots=programming-language-javascript) and uses Azure Cosmos DB for persistent storage of user tokens.
+This registration API serves as an authentication and authorization layer for the pizza ordering system. It integrates seamlessly with **Azure Static Web Apps** authentication and uses **Azure Cosmos DB** for persistent token storage, with automatic fallback to in-memory storage for local development.
 
-## API Endpoints
+The API follows serverless best practices and is designed to handle user registration and token management with minimal latency and automatic scaling.
 
-| Method | Path                 | Description                                                      |
-|--------|----------------------|------------------------------------------------------------------|
-| GET    | /api/me/access-token | Returns a unique access token for the authenticated user.        |
+<div align="center">
+  <img src="./docs/images/architecture.drawio.png" alt="Application architecture" />
+</div>
 
-- **GET /api/register**
-  - Returns a unique `accessToken` for the current user. If the user does not exist, a new token is generated and stored.
-  - Requires the `x-ms-client-principal` header (base64-encoded JSON with at least a `userId` property). This header is provided by Azure Static Web Apps and contains information about the authenticated user.
-  - Returns `401 Unauthorized` if the header is missing or invalid.
+### Features
 
-**Example request using REST Client:**
-
-```http
-GET http://localhost:7071/api/register
-x-ms-client-principal: eyJ1c2VySWQiOiJfX3Rlc3RfdXNlcl9fIn0=
-```
-
-**Example response:**
-
-```json
-{
-  "accessToken": "<unique-token>"
-}
-```
+- **Serverless Architecture**: Built on Azure Functions for automatic scaling and cost efficiency
+- **Secure Token Management**: Generates and manages unique access tokens per user
+- **Azure Integration**: Native integration with Azure Static Web Apps authentication
+- **User Privacy**: Stores only hashed user IDs, not personal information
 
 ## Development
 
-### Setup development environment
+### Getting started
 
-You can run this project directly in your browser by using GitHub Codespaces, which will open a web-based VS Code.
-
-1. [**Fork**](https://github.com/Microsoft/open-hack-build-25/fork) the project to create your own copy of this repository.
-2. On your forked repository, select the **Code** button, then the **Codespaces** tab, and click on the button **Create codespace on main**.
-   ![Screenshot showing how to create a new codespace](../../docs/images/codespaces.png?raw=true)
-3. Wait for the Codespace to be created, it should take a few minutes.
-
-If you prefer to run the project locally, follow [these instructions](../../README.md#use-your-local-environment).
+Follow the instructions [here](../../README.md#getting-started) to set up the development environment for the entire Pizza MCP Agents project.
 
 ### Run the application
 
-You can run the following command to run the application locally:
+Start the development environment:
 
 ```bash
 npm start
 ```
 
-This command will start the Azure Functions application locally. You can test the application by opening the file `api.http` and clicking on **Send Request** to test the endpoints.
+This command will start the Azure Functions emulator with the Registration API at `http://localhost:7072`.
+You can then use the `api.http` file to test the API endpoints using the [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) VS Code extension, or any HTTP client like `curl`.
+
+### Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm start` | Start the development server with hot reload |
+| `npm run build` | Build the TypeScript source |
+| `npm run clean` | Clean build artifacts |
+| `npm run dev:storage` | Start local Azurite storage emulator |
+
+### Configuration
+
+The application uses environment variables for configuration:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AZURE_COSMOSDB_NOSQL_ENDPOINT` | Azure Cosmos DB endpoint | `""` (not set) |
 
 > [!NOTE]
-> If you have not deployed the Azure resources, it will fall back to in-memory data. You can test the API without deploying it to Azure.
+> When running locally without any Cosmos DB configuration set, the API will automatically use in-memory storage and log this behavior.
+
+## API Reference
+
+This API provides a single endpoint for user registration and token management. On the first request, a new user is created with a unique access token if it doesn't exist. Subsequent requests return the existing token for the user.
+
+**`GET /api/me/access-token`**
+
+Returns a unique access token for the authenticated user. If the user doesn't exist, creates a new user record with a fresh token.
+
+#### Headers
+
+| Header | Type | Required | Description |
+|--------|------|----------|-------------|
+| `x-ms-client-principal` | string | Yes | Base64-encoded JSON containing user info from Azure Static Web Apps |
+
+#### Response
+
+```json
+{
+  "accessToken": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+#### Status Codes
+
+- `200` - Success
+- `401` - Unauthorized (missing or invalid auth header)
+- `500` - Internal server error
