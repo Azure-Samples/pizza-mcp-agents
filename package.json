@@ -11,6 +11,7 @@
     "start:mcp": "cd src/pizza-mcp && npm start",
     "ready": "echo '\n🚀 All services ready 🚀\n\n- Pizza webapp  : http://localhost:5173\n- Registration webapp : http://localhost:4280\n- Pizza API    : http://localhost:7071\n- Pizza MCP    : http://localhost:3000/mcp\n'",
     "mcp:local": "cd src/pizza-mcp && npm run -s start:local",
+    "env": "node env.js",
     "format": "prettier --list-different --write 'src/**/*.ts' 'src/**/*.js' 'src/**/*.mjs'",
     "preinstall": "cd src/pizza-webapp && npm install && cd ../registration-webapp && npm install && cd ../pizza-api && npm install && cd ../registration-api && npm install && cd ../pizza-mcp && npm install"
   },
@@ -18,6 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^9",
+    "dotenv": "^17.2.1",
     "prettier": "^3",
     "run-on-output": "^1.0.1"
   },
