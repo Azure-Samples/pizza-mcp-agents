@@ -167,6 +167,13 @@ To use the MCP server in local mode with GitHub Copilot, create a local `.vscode
 }
 ```
 
+Make sure that you have the Pizza services running locally by running `npm start` in the project root.
+
+Then, you can use GitHub Copilot in **agent mode** to interact with the MCP server. For example, you can ask questions like "What pizzas are available?" or "Place an order for a Margherita pizza" and Copilot will use the MCP server to provide answers or perform actions. 
+
+> [!TIP]
+> Copilot models can behave differently regarding tools usage, so if you don't see it calling the `pizza-mcp` tools, you can explicitly mention using the Pizza MCP server by adding `#pizza-mcp` in your prompt.
+
 ## Deploy to Azure
 
 ### Prerequisites
@@ -201,13 +208,11 @@ azd down --purge
 
 Here are some resources to learn more about the technologies used in this project:
 
-- [Model Context Protocol](https://modelcontextprotocol.io/) - Learn about MCP and building AI agents
-- [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview?pivots=programming-language-javascript) - Serverless compute platform
-- [Azure Static Web Apps](https://learn.microsoft.com/azure/static-web-apps/overview) - Modern web app hosting
-- [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) - Serverless containers
-- [Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/nosql/) - NoSQL database service
-- [GitHub Copilot](https://github.com/features/copilot) - AI-powered code completion
-- [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/overview) - Developer productivity toolchain
+- [Model Context Protocol](https://modelcontextprotocol.io/) - More about the MCP protocol
+- [MCP for Beginners](https://github.com/microsoft/mcp-for-beginners) - A beginner-friendly introduction to MCP
+- [Generative AI with JavaScript](https://github.com/microsoft/generative-ai-with-javascript) - Learn how to build Generative AI applications with JavaScript
+- [Azure AI Travel Agents with Llamaindex.TS and MCP](https://github.com/Azure-Samples/azure-ai-travel-agents/) - Sample for building AI agents using Llamaindex.TS and MCP
+- [Serverless AI Chat with RAG using LangChain.js](https://github.com/Azure-Samples/serverless-chat-langchainjs) - Sample for building a serverless AI chat grounded on your own data with LangChain.js
 
 You can also find [more Azure AI samples here](https://github.com/Azure-Samples/azureai-samples).
 
@@ -216,9 +221,9 @@ You can also find [more Azure AI samples here](https://github.com/Azure-Samples/
 If you encounter issues while running or deploying this sample:
 
 1. **Dependencies**: Ensure all required tools are installed and up to date
-2. **Ports**: Make sure required ports (3000, 4280, 5173, 7071) are not in use
+2. **Ports**: Make sure required ports (3000, 4280, 5173, 7071, 7071, 8088) are not in use
 3. **Azure Developer CLI**: Verify you're authenticated with `azd auth login`
-4. **Node.js version**: Ensure you're using Node.js 20 or higher
+4. **Node.js version**: Ensure you're using Node.js 22 or higher
 
 For more detailed troubleshooting, check the individual README files in each service directory.
 
