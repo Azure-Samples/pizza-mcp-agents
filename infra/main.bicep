@@ -11,15 +11,14 @@ param environmentName string
 // Run `az functionapp list-flexconsumption-locations --output table` to get the latest list
 @allowed([
   'northeurope'
-  'southeastasia'
-  'eastasia'
+  // 'southeastasia'
+  // 'eastasia'
   'eastus2'
-  'southcentralus'
-  'australiaeast'
-  'eastus'
-  'westus2'
-  'uksouth'
-  'eastus2euap'
+  // 'southcentralus'
+  // 'australiaeast'
+  // 'eastus'
+  // 'westus2'
+  // 'uksouth'
   'westus3'
   'swedencentral'
 ])
