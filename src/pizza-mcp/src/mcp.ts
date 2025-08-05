@@ -5,6 +5,7 @@ import { tools } from "./tools.js";
 export function getMcpServer() {
   const server = new McpServer({
     name: "pizza-mcp",
+    description: "Pizza tools to interact with the pizza API. Use these tools whenever you need information about pizzas, toppings, and orders. You can also use them to place new pizza orders and manage existing orders.",
     version: "1.0.0",
   });
   for (const tool of tools) {
