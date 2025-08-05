@@ -21,13 +21,13 @@ app.http('pizzas-get', {
 
     const dataService = await DbService.getInstance();
     const pizzas = await dataService.getPizzas();
-    const transformedPizzas = pizzas.map(pizza => transformPizzaImageUrl(pizza, request));
+    const transformedPizzas = pizzas.map((pizza) => transformPizzaImageUrl(pizza, request));
 
     return {
       jsonBody: transformedPizzas,
-      status: 200
+      status: 200,
     };
-  }
+  },
 });
 
 app.http('pizza-get-by-id', {
@@ -42,7 +42,7 @@ app.http('pizza-get-by-id', {
     if (!pizza) {
       return {
         jsonBody: { error: 'Pizza not found' },
-        status: 404
+        status: 404,
       };
     }
 
@@ -50,7 +50,7 @@ app.http('pizza-get-by-id', {
 
     return {
       jsonBody: transformedPizza,
-      status: 200
+      status: 200,
     };
-  }
+  },
 });

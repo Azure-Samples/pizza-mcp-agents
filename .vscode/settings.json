@@ -2,4 +2,8 @@
   "workbench.editorAssociations": {
     "*.ipynb.md": "genaiscript"
   },
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#8f0000",
+    "statusBar.foreground": "#ffffff"
+  }
 }

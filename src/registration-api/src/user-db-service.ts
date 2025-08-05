@@ -35,7 +35,7 @@ export class UserDbService {
       this.useInMemoryDb = true;
       return;
     }
-    
+
     await this.initializeCosmosDb();
   }
 
@@ -49,7 +49,7 @@ export class UserDbService {
       this.database = database;
       const { container } = await this.database.containers.createIfNotExists({
         id: 'users',
-        partitionKey: { paths: ['/id'] }
+        partitionKey: { paths: ['/id'] },
       });
       this.usersContainer = container;
       this.isCosmosDbInitialized = true;
@@ -64,12 +64,12 @@ export class UserDbService {
     if (this.useInMemoryDb) {
       return this.inMemoryUsers.get(hash);
     }
-    
+
     if (!this.isCosmosDbInitialized) return undefined;
     try {
       const querySpec = {
         query: 'SELECT TOP 1 * FROM c WHERE c.hash = @hash',
-        parameters: [{ name: '@hash', value: hash }]
+        parameters: [{ name: '@hash', value: hash }],
       };
       const { resources } = await this.usersContainer!.items.query(querySpec).fetchAll();
       const resource = resources[0];
@@ -81,17 +81,17 @@ export class UserDbService {
   }
 
   async createUser(hash: string, accessToken: string): Promise<User> {
-    const user: User = { 
-      hash, 
+    const user: User = {
+      hash,
       accessToken,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
-    
+
     if (this.useInMemoryDb) {
       this.inMemoryUsers.set(hash, user);
       return user;
     }
-    
+
     if (!this.isCosmosDbInitialized) throw new Error('Cosmos DB not initialized');
     const { resource } = await this.usersContainer!.items.create(user);
     return resource as User;

@@ -15,7 +15,7 @@ app.http('orders-get', {
     const lastParam = request.query.get('last');
     let statuses: string[] | undefined = undefined;
     if (statusParam) {
-      statuses = statusParam.split(',').map(s => s.trim().toLowerCase());
+      statuses = statusParam.split(',').map((s) => s.trim().toLowerCase());
     }
     let lastMs: number | undefined = undefined;
     if (lastParam) {
@@ -31,9 +31,9 @@ app.http('orders-get', {
     const orders = await dataService.getOrders({ userId, statuses, lastMs });
     return {
       jsonBody: orders,
-      status: 200
+      status: 200,
     };
-  }
+  },
 });
 
 // Get single order by ID endpoint
@@ -47,7 +47,7 @@ app.http('orders-get-by-id', {
     if (!orderId) {
       return {
         jsonBody: { error: 'Order ID is required' },
-        status: 400
+        status: 400,
       };
     }
 
@@ -57,13 +57,13 @@ app.http('orders-get-by-id', {
     if (!order) {
       return {
         jsonBody: { error: 'Order not found' },
-        status: 404
+        status: 404,
       };
     }
 
     return {
       jsonBody: order,
-      status: 200
+      status: 200,
     };
-  }
+  },
 });

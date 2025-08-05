@@ -1,15 +1,15 @@
-import { LitElement, css, html, nothing } from "lit";
-import { unsafeSVG } from "lit/directives/unsafe-svg.js";
-import { repeat } from "lit/directives/repeat.js";
-import { customElement, state } from "lit/decorators.js";
-import { fetchOrders } from "../orders.service.js";
-import type { PizzaOrder } from "../orders.service.js";
-import sliceSvg from "../../assets/slice.svg?raw";
-import pizzaSvg from "../../assets/pizza.svg?raw";
+import { LitElement, css, html, nothing } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { repeat } from 'lit/directives/repeat.js';
+import { customElement, state } from 'lit/decorators.js';
+import { fetchOrders } from '../orders.service.js';
+import type { PizzaOrder } from '../orders.service.js';
+import sliceSvg from '../../assets/slice.svg?raw';
+import pizzaSvg from '../../assets/pizza.svg?raw';
 
-export const apiBaseUrl: string = import.meta.env.VITE_PIZZA_API_URL || "";
+export const apiBaseUrl: string = import.meta.env.VITE_PIZZA_API_URL || '';
 
-@customElement("pizza-dashboard")
+@customElement('pizza-dashboard')
 export class PizzaDashboard extends LitElement {
   @state() protected hasError = false;
   @state() protected inProgressOrders: PizzaOrder[] = [];
@@ -40,25 +40,16 @@ export class PizzaDashboard extends LitElement {
         apiBaseUrl,
         lastMinutes: 10,
       });
-      const completed = orders?.filter(
-        (order) => order.status === "completed" || order.status === "ready"
-      );
-      const inProgress = orders?.filter(
-        (order) =>
-          order.status === "pending" || order.status === "in-preparation"
-      );
+      const completed = orders?.filter((order) => order.status === 'completed' || order.status === 'ready');
+      const inProgress = orders?.filter((order) => order.status === 'pending' || order.status === 'in-preparation');
       if (inProgress === undefined || completed === undefined) {
         this.hasError = true;
         return;
       }
       // Sort latest first
-      this.inProgressOrders = [...inProgress]
-        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-        .slice(0, 50);
+      this.inProgressOrders = [...inProgress].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 50);
       this.completedOrders = [...completed]
-        .sort((a, b) =>
-          (b.completedAt ?? "").localeCompare(a.completedAt ?? "")
-        )
+        .sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))
         .slice(0, 50);
     } catch {
       this.hasError = true;
@@ -67,49 +58,30 @@ export class PizzaDashboard extends LitElement {
 
   protected updated(changedProps: Map<string, unknown>) {
     super.updated(changedProps);
-    if (
-      changedProps.has("inProgressOrders") ||
-      changedProps.has("completedOrders")
-    ) {
-      this.handleOrderAnimations(
-        this.inProgressOrders,
-        this.prevInProgressOrders
-      );
-      this.handleOrderAnimations(
-        this.completedOrders,
-        this.prevCompletedOrders
-      );
+    if (changedProps.has('inProgressOrders') || changedProps.has('completedOrders')) {
+      this.handleOrderAnimations(this.inProgressOrders, this.prevInProgressOrders);
+      this.handleOrderAnimations(this.completedOrders, this.prevCompletedOrders);
       this.prevInProgressOrders = [...this.inProgressOrders];
       this.prevCompletedOrders = [...this.completedOrders];
     }
   }
 
-  private handleOrderAnimations(
-    currentOrders: PizzaOrder[],
-    prevOrders: PizzaOrder[]
-  ) {
+  private handleOrderAnimations(currentOrders: PizzaOrder[], prevOrders: PizzaOrder[]) {
     const currentIds = new Set(currentOrders.map((o) => o.id));
     // Animate new orders (fade-in)
     currentOrders.forEach((order) => {
       if (!prevOrders.some((o) => o.id === order.id)) {
-        const node = this.renderRoot.querySelector(
-          `[data-order-id='${order.id}']`
-        );
+        const node = this.renderRoot.querySelector(`[data-order-id='${order.id}']`);
         if (node) {
-          node.classList.add("fade-in");
+          node.classList.add('fade-in');
         }
       }
     });
     // Animate removed orders (fade-out only if not present in either column)
     prevOrders.forEach((order) => {
       const isNowInOtherColumn =
-        this.inProgressOrders.some((o) => o.id === order.id) ||
-        this.completedOrders.some((o) => o.id === order.id);
-      if (
-        !currentIds.has(order.id) &&
-        !isNowInOtherColumn &&
-        !this.leavingOrders.has(order.id)
-      ) {
+        this.inProgressOrders.some((o) => o.id === order.id) || this.completedOrders.some((o) => o.id === order.id);
+      if (!currentIds.has(order.id) && !isNowInOtherColumn && !this.leavingOrders.has(order.id)) {
         this.leavingOrders.set(order.id, order);
         this.requestUpdate();
       }
@@ -117,49 +89,41 @@ export class PizzaDashboard extends LitElement {
   }
 
   protected getOrderDisplayStatus(order: PizzaOrder): string {
-    if (order.status === "pending") return "new";
-    if (order.status === "in-preparation") return "in preparation";
-    if (order.status === "ready") return "ready";
-    if (order.status === "completed") return "completed";
-    return order.status.replace(/-/g, " ");
+    if (order.status === 'pending') return 'new';
+    if (order.status === 'in-preparation') return 'in preparation';
+    if (order.status === 'ready') return 'ready';
+    if (order.status === 'completed') return 'completed';
+    return order.status.replace(/-/g, ' ');
   }
 
   protected getOrderBoxClass(order: PizzaOrder): string {
-    if (order.status === "pending") return "order-box status-new";
-    if (order.status === "in-preparation") return "order-box status-inprep";
-    if (order.status === "ready") return "order-box status-ready";
-    if (order.status === "completed") return "order-box status-completed";
-    return "order-box";
+    if (order.status === 'pending') return 'order-box status-new';
+    if (order.status === 'in-preparation') return 'order-box status-inprep';
+    if (order.status === 'ready') return 'order-box status-ready';
+    if (order.status === 'completed') return 'order-box status-completed';
+    return 'order-box';
   }
 
   protected getOrderPizzaCount(order: PizzaOrder): number {
     return order.items.reduce((sum, item) => sum + item.quantity, 0);
   }
 
-  protected renderError = () => html`<p class="error">
-    Error while loading orders. Please retry later.
-  </p>`;
+  protected renderError = () => html`<p class="error">Error while loading orders. Please retry later.</p>`;
 
   protected renderOrder = (order: PizzaOrder, isLeaving = false) => {
-    const animClass = isLeaving ? "fade-out" : "";
+    const animClass = isLeaving ? 'fade-out' : '';
     // Use nickname (first 8 chars) if available, otherwise use orderId (first 8 chars)
-    const displayId = order.nickname 
-      ? `${order.nickname.slice(0, 10)}` 
-      : `#${order.id.slice(-6)}`;
+    const displayId = order.nickname ? `${order.nickname.slice(0, 10)}` : `#${order.id.slice(-6)}`;
     return html`
       <div
         data-order-id="${order.id}"
         class="order-anim ${animClass}"
-        @animationend=${isLeaving
-          ? () => this.handleFadeOutEnd(order.id)
-          : undefined}
+        @animationend=${isLeaving ? () => this.handleFadeOutEnd(order.id) : undefined}
       >
         <div class="${this.getOrderBoxClass(order)}">
           <div class="order-id">${displayId}</div>
           <div class="order-status">
-            <div class="order-status-inner">
-              ${this.getOrderDisplayStatus(order)}
-            </div>
+            <div class="order-status-inner">${this.getOrderDisplayStatus(order)}</div>
           </div>
           <div class="order-pizza-count">
             ${this.getOrderPizzaCount(order)}
@@ -176,19 +140,15 @@ export class PizzaDashboard extends LitElement {
   }
 
   protected getNewOrderCount() {
-    return this.inProgressOrders.filter((order) => order.status === "pending")
-      .length;
+    return this.inProgressOrders.filter((order) => order.status === 'pending').length;
   }
 
   protected getInPreparationOrderCount() {
-    return this.inProgressOrders.filter(
-      (order) => order.status === "in-preparation"
-    ).length;
+    return this.inProgressOrders.filter((order) => order.status === 'in-preparation').length;
   }
 
   protected getReadyOrderCount() {
-    return this.completedOrders.filter((order) => order.status === "ready")
-      .length;
+    return this.completedOrders.filter((order) => order.status === 'ready').length;
   }
 
   protected renderDashboard = () => {
@@ -196,14 +156,10 @@ export class PizzaDashboard extends LitElement {
     const inProgressIds = new Set(this.inProgressOrders.map((o) => o.id));
     const completedIds = new Set(this.completedOrders.map((o) => o.id));
     const leavingInProgress = Array.from(this.leavingOrders.values()).filter(
-      (o) =>
-        !inProgressIds.has(o.id) &&
-        (o.status === "pending" || o.status === "in-preparation")
+      (o) => !inProgressIds.has(o.id) && (o.status === 'pending' || o.status === 'in-preparation'),
     );
     const leavingCompleted = Array.from(this.leavingOrders.values()).filter(
-      (o) =>
-        !completedIds.has(o.id) &&
-        (o.status === "completed" || o.status === "ready")
+      (o) => !completedIds.has(o.id) && (o.status === 'completed' || o.status === 'ready'),
     );
     return html`
       <div class="container">
@@ -231,39 +187,25 @@ export class PizzaDashboard extends LitElement {
           <div class="orders-column in-progress">
             <div class="orders-column-container">
               <h2>In Progress</h2>
-              ${
-                this.inProgressOrders.length === 0 &&
-                leavingInProgress.length === 0
-                  ? nothing
-                  : repeat(
-                      [...this.inProgressOrders, ...leavingInProgress],
-                      (order) => order.id,
-                      (order) =>
-                        this.renderOrder(
-                          order,
-                          !!this.leavingOrders.get(order.id)
-                        )
-                    )
-              }
+              ${this.inProgressOrders.length === 0 && leavingInProgress.length === 0
+                ? nothing
+                : repeat(
+                    [...this.inProgressOrders, ...leavingInProgress],
+                    (order) => order.id,
+                    (order) => this.renderOrder(order, !!this.leavingOrders.get(order.id)),
+                  )}
             </div>
           </div>
           <div class="orders-column completed">
             <div class="orders-column-container">
               <h2>Ready for Pickup</h2>
-              ${
-                this.completedOrders.length === 0 &&
-                leavingCompleted.length === 0
-                  ? nothing
-                  : repeat(
-                      [...this.completedOrders, ...leavingCompleted],
-                      (order) => order.id,
-                      (order) =>
-                        this.renderOrder(
-                          order,
-                          !!this.leavingOrders.get(order.id)
-                        )
-                    )
-              }
+              ${this.completedOrders.length === 0 && leavingCompleted.length === 0
+                ? nothing
+                : repeat(
+                    [...this.completedOrders, ...leavingCompleted],
+                    (order) => order.id,
+                    (order) => this.renderOrder(order, !!this.leavingOrders.get(order.id)),
+                  )}
             </div>
           </div>
         </div>
@@ -286,7 +228,7 @@ export class PizzaDashboard extends LitElement {
         text-align: center;
         background: #555;
         background-image: radial-gradient(circle at center, #999 0%, #555 100%);
-        font-family: "Sofia Sans Condensed", sans-serif;
+        font-family: 'Sofia Sans Condensed', sans-serif;
 
         * {
           box-sizing: border-box;
@@ -361,9 +303,7 @@ export class PizzaDashboard extends LitElement {
           background: hsl(from var(--piz-primary) calc(h + 20) s calc(l * 0.9));
         }
         &.ready {
-          background: hsl(
-            from var(--piz-primary) calc(h + 120) s calc(l * 0.7)
-          );
+          background: hsl(from var(--piz-primary) calc(h + 120) s calc(l * 0.7));
         }
       }
       .dashboard-columns {
@@ -384,18 +324,14 @@ export class PizzaDashboard extends LitElement {
         border: 4px solid var(--piz-primary);
 
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           right: 0;
           bottom: 0;
           height: 1.5rem;
           pointer-events: none;
-          background: linear-gradient(
-            to bottom,
-            transparent,
-            var(--piz-primary-bg) 66%
-          );
+          background: linear-gradient(to bottom, transparent, var(--piz-primary-bg) 66%);
           border-radius: 0 0 1.5rem 1.5rem;
           z-index: 2;
           overflow: hidden;
@@ -434,7 +370,7 @@ export class PizzaDashboard extends LitElement {
         gap: 1rem;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
         opacity: 1;
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .status-new .order-status {
         background: hsl(from var(--piz-primary) calc(h + 200) s l);
@@ -494,7 +430,8 @@ export class PizzaDashboard extends LitElement {
         display: flex;
         opacity: 1;
         transform: translateX(0);
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        transition:
+          opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
           transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .order-anim.fade-in {
@@ -544,6 +481,6 @@ export class PizzaDashboard extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "pizza-dashboard": PizzaDashboard;
+    'pizza-dashboard': PizzaDashboard;
   }
 }

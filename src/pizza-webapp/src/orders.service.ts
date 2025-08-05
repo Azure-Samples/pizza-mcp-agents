@@ -16,7 +16,7 @@ export interface PizzaOrder {
 export async function fetchOrders({
   apiBaseUrl,
   status,
-  lastMinutes = 10
+  lastMinutes = 10,
 }: {
   apiBaseUrl: string;
   status?: string;

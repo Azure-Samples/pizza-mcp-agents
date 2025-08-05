@@ -1,6 +1,6 @@
 // This script uses GenAIScript (https://aka.ms/genaiscript)
 // to generate the menu for a pizza restaurant.
-import { z } from "@genaiscript/runtime";
+import { z } from '@genaiscript/runtime';
 
 const role = `## Role
 You're a renowned italian chef with a passion for pizza. You have a deep knowledge of classic Italian cuisine and the taste of american customers.`;
@@ -19,7 +19,7 @@ export const pizzaSchema = z.object({
 export const pizzaMenuSchema = z.array(pizzaSchema);
 
 const { text: pizzas } = await runPrompt((_) => {
-  const schema = _.defSchema("SCHEMA", pizzaMenuSchema);
+  const schema = _.defSchema('SCHEMA', pizzaMenuSchema);
   _.$`${role}
 
 ## Task
@@ -42,21 +42,12 @@ export const toppingSchema = z.object({
   description: z.string(),
   price: z.number(),
   imageUrl: z.string(),
-  category: z.enum([
-    "vegetable",
-    "meat",
-    "fish",
-    "fruit",
-    "cheese",
-    "herbs",
-    "spices",
-    "sauce",
-  ]),
+  category: z.enum(['vegetable', 'meat', 'fish', 'fruit', 'cheese', 'herbs', 'spices', 'sauce']),
 });
 export const toppingMenuSchema = z.array(toppingSchema);
 const { text: toppings } = await runPrompt((_) => {
-  const pizzaMenu = def("PIZZAS", pizzas, { language: "json" });
-  const schema = _.defSchema("SCHEMA", toppingMenuSchema);
+  const pizzaMenu = def('PIZZAS', pizzas, { language: 'json' });
+  const schema = _.defSchema('SCHEMA', toppingMenuSchema);
   _.$`${role}
 
 ## Task
@@ -74,9 +65,9 @@ ImageUrl should be an empty string for now, as the images will be added later.
 // Replace toppings with their IDs in pizzas
 
 const { text: finalPizzas } = await runPrompt((_) => {
-  const pizzaMenu = _.def("PIZZAS", pizzas, { language: "json" });
-  const toppingMenu = _.def("TOPPINGS", toppings, { language: "json" });
-  const schema = _.defSchema("SCHEMA", pizzaMenuSchema);
+  const pizzaMenu = _.def('PIZZAS', pizzas, { language: 'json' });
+  const toppingMenu = _.def('TOPPINGS', toppings, { language: 'json' });
+  const schema = _.defSchema('SCHEMA', pizzaMenuSchema);
   _.$`${role}
 
 ## Task
@@ -115,5 +106,5 @@ for (const pizza of parsedPizzas) {
 // ----------------------------------------------------------------------------
 // Save files
 
-await workspace.writeText("../pizza-api/data/pizzas.json", finalPizzas);
-await workspace.writeText("../pizza-api/data/toppings.json", toppings);
+await workspace.writeText('../pizza-api/data/pizzas.json', finalPizzas);
+await workspace.writeText('../pizza-api/data/toppings.json', toppings);

@@ -1,19 +1,18 @@
-import { LitElement, css, html } from "lit";
-import { unsafeSVG } from "lit/directives/unsafe-svg.js";
-import { customElement, state } from "lit/decorators.js";
-import { getUserInfo } from "../auth.service";
-import copySvg from "../../assets/icons/copy.svg?raw";
-import sliceSvg from "../../assets/icons/slice.svg?raw";
+import { LitElement, css, html } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { customElement, state } from 'lit/decorators.js';
+import { getUserInfo } from '../auth.service';
+import copySvg from '../../assets/icons/copy.svg?raw';
+import sliceSvg from '../../assets/icons/slice.svg?raw';
 
-export const apiBaseUrl: string =
-  import.meta.env.VITE_REGISTRATION_API_URL || "";
+export const apiBaseUrl: string = import.meta.env.VITE_REGISTRATION_API_URL || '';
 
-@customElement("register-user")
+@customElement('register-user')
 export class RegisterUser extends LitElement {
-  @state() protected accessToken: string = "";
+  @state() protected accessToken: string = '';
   @state() protected isLoading = false;
   @state() protected hasError = false;
-  @state() protected username: string = "";
+  @state() protected username: string = '';
 
   constructor() {
     super();
@@ -27,7 +26,7 @@ export class RegisterUser extends LitElement {
       try {
         await navigator.clipboard.writeText(this.accessToken);
         // Select the user-id text
-        const pre = this.renderRoot.querySelector(".user-id");
+        const pre = this.renderRoot.querySelector('.user-id');
         if (pre) {
           const range = document.createRange();
           range.selectNodeContents(pre);
@@ -38,7 +37,7 @@ export class RegisterUser extends LitElement {
           }
         }
       } catch (err) {
-        console.error("Failed to copy user ID:", err);
+        console.error('Failed to copy user ID:', err);
       }
     }
   };
@@ -48,9 +47,7 @@ export class RegisterUser extends LitElement {
     <reg-auth></reg-auth>
   `;
 
-  protected renderError = () => html`<p class="error">
-    Error during registration. Please retry later.
-  </p>`;
+  protected renderError = () => html`<p class="error">Error during registration. Please retry later.</p>`;
 
   protected renderRegistrationCard = () => html`
     <div class="card card-shine">
@@ -72,9 +69,7 @@ export class RegisterUser extends LitElement {
             <span class="copy-icon">${unsafeSVG(copySvg)}</span>
           </button>
         </div>
-        <div class="warning">
-          This user ID is personal, do not share it with anyone!
-        </div>
+        <div class="warning">This user ID is personal, do not share it with anyone!</div>
       </div>
     </div>
   `;
@@ -89,12 +84,12 @@ export class RegisterUser extends LitElement {
 
       const response = await fetch(`${apiBaseUrl}/api/me/access-token`);
       if (!response.ok) {
-        throw new Error("An error occurred while fetching the access token");
+        throw new Error('An error occurred while fetching the access token');
       }
       const data = await response.json();
       this.accessToken = data.accessToken;
     } catch (error) {
-      console.error("Error fetching access token:", error);
+      console.error('Error fetching access token:', error);
       this.hasError = true;
     } finally {
       this.isLoading = false;
@@ -105,10 +100,10 @@ export class RegisterUser extends LitElement {
     return this.isLoading
       ? this.renderLoading()
       : !this.username
-      ? this.renderLogin()
-      : this.hasError
-      ? this.renderError()
-      : this.renderRegistrationCard();
+        ? this.renderLogin()
+        : this.hasError
+          ? this.renderError()
+          : this.renderRegistrationCard();
   }
 
   static styles = css`
@@ -123,11 +118,14 @@ export class RegisterUser extends LitElement {
       width: 100%;
     }
     h1 {
-      font-family: "Sofia Sans Condensed", sans-serif;
+      font-family: 'Sofia Sans Condensed', sans-serif;
       font-size: 2.5em;
       color: #fff;
     }
-    h1, p, pre, .warning {
+    h1,
+    p,
+    pre,
+    .warning {
       text-shadow: 0 1px 0px rgba(0, 0, 0, 0.5);
     }
     .card {
@@ -136,10 +134,11 @@ export class RegisterUser extends LitElement {
       border-radius: var(--reg-border-radius);
       padding: 2rem;
       margin-bottom: 2rem;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2),
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.2),
         -1px -1px 1px rgba(255, 255, 255, 0.3),
         2px 4px 8px rgba(0, 0, 0, 0.4);
-      font-family: "Sofia Sans Condensed", sans-serif;
+      font-family: 'Sofia Sans Condensed', sans-serif;
       text-align: left;
       overflow: hidden;
       width: 100%;
@@ -173,7 +172,9 @@ export class RegisterUser extends LitElement {
       position: relative;
       overflow: hidden;
       background-repeat: no-repeat;
-      background-position: 0% 0, 0 0;
+      background-position:
+        0% 0,
+        0 0;
       background-image: linear-gradient(
         var(--shine-deg),
         transparent 20%,
@@ -183,11 +184,15 @@ export class RegisterUser extends LitElement {
         transparent 56%,
         transparent 100%
       );
-      background-size: 250% 250%, 100% 100%;
+      background-size:
+        250% 250%,
+        100% 100%;
       transition: background-position 1.5s ease;
     }
     .card-shine:hover {
-      background-position: 90% 0, 0 0;
+      background-position:
+        90% 0,
+        0 0;
     }
     .slice {
       z-index: 1;
@@ -246,6 +251,6 @@ export class RegisterUser extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "register-user": RegisterUser;
+    'register-user': RegisterUser;
   }
 }

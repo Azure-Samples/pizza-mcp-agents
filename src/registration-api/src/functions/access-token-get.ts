@@ -1,28 +1,24 @@
-import { createHash, randomUUID } from "node:crypto";
-import {
-  app,
-  type HttpRequest,
-  type InvocationContext,
-} from "@azure/functions";
-import { UserDbService } from "../user-db-service.js";
-import { getUserInfo } from "../auth.js";
+import { createHash, randomUUID } from 'node:crypto';
+import { app, type HttpRequest, type InvocationContext } from '@azure/functions';
+import { UserDbService } from '../user-db-service.js';
+import { getUserInfo } from '../auth.js';
 
-app.http("access-token", {
-  methods: ["GET"],
-  authLevel: "anonymous",
-  route: "me/access-token",
+app.http('access-token', {
+  methods: ['GET'],
+  authLevel: 'anonymous',
+  route: 'me/access-token',
   async handler(request: HttpRequest, context: InvocationContext) {
     try {
       const userInfo = getUserInfo(request);
       if (!userInfo || !userInfo.userId) {
         return {
           status: 401,
-          jsonBody: { error: "Unauthorized" },
+          jsonBody: { error: 'Unauthorized' },
         };
       }
 
       const { userId } = userInfo;
-      const hash = createHash("sha256").update(userId).digest("base64");
+      const hash = createHash('sha256').update(userId).digest('base64');
       context.log(`User hash ${hash}`);
 
       const db = await UserDbService.getInstance();
@@ -40,10 +36,10 @@ app.http("access-token", {
         jsonBody: { accessToken: user.accessToken },
       };
     } catch (error) {
-      context.error("Error in access-token handler", error);
+      context.error('Error in access-token handler', error);
       return {
         status: 500,
-        jsonBody: { error: "Internal Server Error" },
+        jsonBody: { error: 'Internal Server Error' },
       };
     }
   },

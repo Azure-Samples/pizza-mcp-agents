@@ -18,7 +18,6 @@ app.http('openapi-get', {
       const openapiPath = path.join(process.cwd(), 'openapi.yaml');
       const openapiContent = await fs.readFile(openapiPath, 'utf8');
 
-
       // Replace PIZZA_API_HOST placeholder with actual host URL
       console.log('PIZZA_API_URL:', process.env.PIZZA_API_URL);
       context.log('Replacing <PIZZA_API_HOST> in OpenAPI specification...');

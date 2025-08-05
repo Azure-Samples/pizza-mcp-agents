@@ -11,8 +11,6 @@ import githubSvg from '../../assets/providers/github.svg?inline';
 const loginRoute = '/.auth/login';
 const logoutRoute = '/.auth/logout';
 
-
-
 export type AuthComponentOptions = {
   strings: {
     logoutButton: string;

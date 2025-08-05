@@ -22,25 +22,25 @@ app.http('toppings-get', {
 
     const dataService = await DbService.getInstance();
     const categoryParam = request.query.get('category');
-    
+
     // If a category is specified, filter toppings by category
     if (categoryParam && Object.values(ToppingCategory).includes(categoryParam as ToppingCategory)) {
       const toppings = await dataService.getToppingsByCategory(categoryParam as ToppingCategory);
-      const transformedToppings = toppings.map(topping => transformToppingImageUrl(topping, request));
+      const transformedToppings = toppings.map((topping) => transformToppingImageUrl(topping, request));
       return {
         jsonBody: transformedToppings,
-        status: 200
+        status: 200,
       };
     }
-    
+
     // Otherwise return all toppings
     const toppings = await dataService.getToppings();
-    const transformedToppings = toppings.map(topping => transformToppingImageUrl(topping, request));
+    const transformedToppings = toppings.map((topping) => transformToppingImageUrl(topping, request));
     return {
       jsonBody: transformedToppings,
-      status: 200
+      status: 200,
     };
-  }
+  },
 });
 
 app.http('topping-get-by-id', {
@@ -55,7 +55,7 @@ app.http('topping-get-by-id', {
     if (!topping) {
       return {
         jsonBody: { error: 'Topping not found' },
-        status: 404
+        status: 404,
       };
     }
 
@@ -63,9 +63,9 @@ app.http('topping-get-by-id', {
 
     return {
       jsonBody: transformedTopping,
-      status: 200
+      status: 200,
     };
-  }
+  },
 });
 
 app.http('topping-categories-get', {
@@ -75,7 +75,7 @@ app.http('topping-categories-get', {
   handler: async (_request: HttpRequest, _context: InvocationContext) => {
     return {
       jsonBody: Object.values(ToppingCategory),
-      status: 200
+      status: 200,
     };
-  }
+  },
 });
