@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "run-on-output -n 'ready' -p 'pizza.*lock,registration.*lock' concurrently \"npm:start:*\" --kill-others",
+    "start": "run-on-output -n 'ready' -p 'pizza.*lock,registration.*lock,:4280' concurrently \"npm:start:*\" --kill-others",
     "start:pizza": "cd src/pizza-webapp && npm start",
     "start:registration": "cd src/registration-webapp && npm run start",
     "start:mcp": "cd src/pizza-mcp && npm start",
