@@ -1,11 +1,16 @@
 {
-  "servers": {
-    "pizza-mcp": {
-      "command": "npm",
-      "args": ["run", "-s", "mcp:local"],
-      "env": {
-        "PIZZA_API_URL": "http://localhost:7071"
-      }
-    }
-  }
+	"servers": {
+		"pizza-mcp": {
+			"command": "npm",
+			"args": [
+				"run",
+				"-s",
+				"mcp:local"
+			],
+			"env": {
+				"PIZZA_API_URL": "http://localhost:7071"
+			},
+			"type": "stdio"
+		},
+	},
 }
