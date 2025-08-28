@@ -5,7 +5,7 @@ This simple agent uses [GenAIScript](https://microsoft.github.io/genaiscript/) t
 ### Starting the MCP server
 Before running the agent, you first need to run the Pizza MCP server. You can do this by running the following command in the root of the repository:
 
-```bash
+```sh
 npm start
 ```
 
@@ -33,19 +33,4 @@ script({
 // Example prompt, you can change it to test different scenarios
 $`Can I have a vegan pizza with extra mushrooms and no cheese?`;
 ```
-
-<!-- genaiscript output start -->
-
-<details>
-<summary>👤 user</summary>
-
-```md
-Can I have a vegan pizza with extra mushrooms and no cheese?
-```
-
-</details>
-
-<!-- genaiscript output end -->
-
-
 
