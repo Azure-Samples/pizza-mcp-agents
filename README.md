@@ -91,7 +91,7 @@ You will also need to have [Docker](https://www.docker.com/get-started/) install
 You need to install following tools to work on your local machine:
 
 - [Node.js LTS](https://nodejs.org/en/download)
-- [Azure Developer CLI](https://aka.ms/azure-dev/install)
+- [Azure Developer CLI](https://aka.ms/azure-dev/install) (**recommended**: `azd` >= 1.22.5)
 - [Git](https://git-scm.com/downloads)
 - [PowerShell 7+](https://github.com/powershell/powershell) _(for Windows users only)_
   - **Important**: Ensure you can run `pwsh.exe` from a PowerShell command. If this fails, you likely need to upgrade PowerShell.
@@ -122,9 +122,10 @@ npm start
 ```
 
 This will start:
-- **Pizza Website**: http://localhost:4280
-- **Registration Website**: http://localhost:5173  
+- **Pizza Website**: http://localhost:5173
+- **Registration Website**: http://localhost:4280
 - **Pizza API**: http://localhost:7071
+- **Registration API**: http://localhost:7072
 - **Pizza MCP Server**: http://localhost:3000
 
 > [!NOTE]
@@ -218,6 +219,32 @@ Here are some resources to learn more about the technologies used in this projec
 You can also find [more Azure AI samples here](https://github.com/Azure-Samples/azureai-samples).
 
 ## Troubleshooting
+
+### Deploy: Static Web Apps stuck in "Uploading" (or intermittent deploy failures)
+
+If `azd up` / `azd deploy` fails while deploying a Static Web App and appears to be stuck in an "Uploading" state, the underlying cause is often that your local tooling is too old and ends up uploading the wrong folder (for example, the entire project instead of the built `dist/` output). That can make the upload slow enough that the short-lived signed upload token expires mid-flight.
+
+Recommended fixes:
+
+1. Upgrade `azd` to the latest version:
+
+  ```bash
+  azd version
+  curl -fsSL https://aka.ms/install-azd.sh | bash
+  ```
+
+2. Run the repo preflight check:
+
+  ```bash
+  npm run -s preflight
+  ```
+
+3. Retry:
+
+  ```bash
+  azd deploy
+  ```
+
 
 If you encounter issues while running or deploying this sample:
 

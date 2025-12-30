@@ -19,10 +19,18 @@ services:
       predeploy:
         windows:
           shell: pwsh
-          run: npm run build
+          run: |
+            cd ../.. 
+            npm run -s preflight
+            cd src/pizza-webapp
+            npm run build
         posix:
           shell: sh
-          run: npm run build
+          run: |
+            cd ../..
+            npm run -s preflight
+            cd src/pizza-webapp
+            npm run build
 
   registration-api:
     project: ./src/registration-api
@@ -34,6 +42,22 @@ services:
     dist: dist
     language: ts
     host: staticwebapp
+    hooks:
+      predeploy:
+        windows:
+          shell: pwsh
+          run: |
+            cd ../..
+            npm run -s preflight
+            cd src/registration-webapp
+            npm run build
+        posix:
+          shell: sh
+          run: |
+            cd ../..
+            npm run -s preflight
+            cd src/registration-webapp
+            npm run build
 
   pizza-mcp:
     project: ./src/pizza-mcp
