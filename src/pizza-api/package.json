@@ -19,7 +19,7 @@
   "template": "functions",
   "dependencies": {
     "@azure/cosmos": "^4.3.0",
-    "@azure/functions": "^4.7.0",
+    "@azure/functions": "^4.11.0",
     "@azure/identity": "^4.8.0",
     "@azure/storage-blob": "^12.27.0",
     "dotenv": "^17.2.1",
