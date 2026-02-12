@@ -8,6 +8,7 @@ services:
     project: ./src/pizza-api
     language: ts
     host: function
+    remoteBuild: true
 
   pizza-webapp:
     project: ./src/pizza-webapp
@@ -28,6 +29,7 @@ services:
     project: ./src/registration-api
     language: ts
     host: function
+    remoteBuild: true
 
   registration-webapp:
     project: ./src/registration-webapp
