@@ -3,7 +3,9 @@
 # Download at: https://aka.ms/vscode/rest-client
 ##################################################################
 
-@api_host = http://localhost:7071
+@local_host = http://localhost:7071
+@azure_host = https://func-pizza-api-rgx6n3tlqbfzq.azurewebsites.net
+@api_host = {{azure_host}}
 
 ### Get all pizzas
 GET {{api_host}}/api/pizzas
