@@ -3,6 +3,12 @@ name: pizza-mcp-agents
 metadata:
   template: pizza-mcp-agents
 
+requiredVersions:
+  # azd < 1.25.6 deploys Static Web Apps to a "preview" environment instead of
+  # production, failing with "Still in WaitingForDeployment state" and leaving
+  # /api routes broken (see Azure/azure-dev#8583)
+  azd: ">= 1.25.6"
+
 services:
   pizza-api:
     project: ./src/pizza-api

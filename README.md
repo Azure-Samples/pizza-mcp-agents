@@ -91,7 +91,7 @@ You will also need to have [Docker](https://www.docker.com/get-started/) install
 You need to install following tools to work on your local machine:
 
 - [Node.js LTS](https://nodejs.org/en/download)
-- [Azure Developer CLI](https://aka.ms/azure-dev/install)
+- [Azure Developer CLI](https://aka.ms/azure-dev/install) (version 1.25.6 or later)
 - [Git](https://git-scm.com/downloads)
 - [PowerShell 7+](https://github.com/powershell/powershell) _(for Windows users only)_
   - **Important**: Ensure you can run `pwsh.exe` from a PowerShell command. If this fails, you likely need to upgrade PowerShell.
@@ -225,6 +225,7 @@ If you encounter issues while running or deploying this sample:
 2. **Ports**: Make sure required ports (3000, 4280, 5173, 7071, 7071, 8088) are not in use
 3. **Azure Developer CLI**: Verify you're authenticated with `azd auth login`
 4. **Node.js version**: Ensure you're using Node.js 22 or higher
+5. **Deployment fails with `Still in WaitingForDeployment state`**: Update the Azure Developer CLI to version 1.25.6 or later (check with `azd version`). Older versions deployed Static Web Apps to a preview environment instead of production ([Azure/azure-dev#8583](https://github.com/Azure/azure-dev/issues/8583)), which also breaks the web apps' `/api` routes since linked backends only apply to the production environment. If a deployment already failed this way, verify in the Azure portal (under the Static Web App's **Environments**) that content is deployed to **Production** and that no traffic splitting rule routes traffic to a preview environment, then run `azd deploy` again with the updated CLI
 
 For more detailed troubleshooting, check the individual README files in each service directory.
 
